@@ -1,0 +1,17 @@
+  <Antigravity
+    count={50}
+    magnetRadius={22}
+    ringRadius={10}
+    waveSpeed={1.2}
+    waveAmplitude={3.5}
+    particleSize={2}
+    lerpSpeed={0.01}
+    color="#a855f7"
+    autoAnimate={false}
+    particleVariance={0.5}
+    rotationSpeed={0}
+    depthFactor={1}
+    pulseSpeed={1.5}
+    particleShape="capsule"
+    fieldStrength={10}
+  />
