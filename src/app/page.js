@@ -12,9 +12,11 @@ import Projects from "@/components/organisms/Projects";
 import PageLoader from "@/components/atoms/PageLoader";
 import SkipToContent from "@/components/atoms/SkipToContent";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (!loaded) {
@@ -58,7 +60,10 @@ export default function Home() {
               height={64}
             />
           </div>
-          <PrimaryButton text="Contact" />
+          <PrimaryButton
+            text="Contact"
+           onClick={() => router.push("/#contact")}
+          />
         </div>
       </header>
 
@@ -87,7 +92,9 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <Footer />
+       <div id="contact">
+         <Footer />
+        </div>
       </main>
 
       <WebMenu />

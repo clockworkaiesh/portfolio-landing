@@ -33,7 +33,7 @@ export default function About() {
     <section
       ref={containerRef}
       aria-labelledby="about-heading"
-      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-hidden relative"
+      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-hidden relative mt-28 md:mt-0"
     >
       {/* PixelBlast background - desktop only */}
       {isDesktop && !prefersReducedMotion && <div className="w-full h-full absolute inset-5 opacity-20" aria-hidden="true">
@@ -52,7 +52,7 @@ export default function About() {
       </div>}
 
       <div
-        className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[70dvw] mx-auto transition-opacity duration-700"
+        className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[90dvw] mx-auto transition-opacity duration-700"
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <SplitText
