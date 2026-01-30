@@ -10,22 +10,22 @@ export default function Skills() {
   const [isTablet, setIsTablet] = useState(false);
 
   const skills = [
-    { name: "React", image: "/skills/reactjs.svg", category: "frontend" },
-    { name: "Next.js", image: "/skills/nextjs.svg", category: "frontend" },
-    { name: "Vue.js", image: "/skills/vuejs.svg", category: "frontend" },
-    { name: "Vanilla JS", image: "/skills/js.svg", category: "frontend" },
-    { name: "Node.js", image: "/skills/nodejs.svg", category: "backend" },
-    { name: "Redux", image: "/skills/redux.svg", category: "state" },
-    { name: "D3.js", image: "/skills/d3js.svg", category: "visualization" },
-    { name: "Framer Motion", image: "/skills/framermotion.svg", category: "animation" },
-    { name: "Tailwind CSS", image: "/skills/tailwind.svg", category: "styling" },
-    { name: "Sass", image: "/skills/sass.svg", category: "styling" },
-    { name: "Material-UI", image: "/skills/mui.svg", category: "ui" },
-    { name: "Figma", image: "/skills/figma.svg", category: "design" },
-    { name: "Git", image: "/skills/git.svg", category: "tools" },
-    { name: "VS Code", image: "/skills/vscode.svg", category: "tools" },
-    { name: "WordPress", image: "/skills/wordpress.svg", category: "cms" },
-    { name: "Bootstrap", image: "/skills/brand.svg", category: "ui" },
+    { name: "React", image: "/skills/reactjs.webp", category: "frontend" },
+    { name: "Next.js", image: "/skills/nextjs.webp", category: "frontend" },
+    { name: "Vue.js", image: "/skills/vuejs.webp", category: "frontend" },
+    { name: "Vanilla JS", image: "/skills/js.webp", category: "frontend" },
+    { name: "Node.js", image: "/skills/nodejs.webp", category: "backend" },
+    { name: "Redux", image: "/skills/redux.webp", category: "state" },
+    { name: "D3.js", image: "/skills/d3js.webp", category: "visualization" },
+    { name: "Framer Motion", image: "/skills/framermotion.webp", category: "animation" },
+    { name: "Tailwind CSS", image: "/skills/tailwind.webp", category: "styling" },
+    { name: "Sass", image: "/skills/sass.webp", category: "styling" },
+    { name: "Material-UI", image: "/skills/mui.webp", category: "ui" },
+    { name: "Figma", image: "/skills/figma.webp", category: "design" },
+    { name: "Git", image: "/skills/git.webp", category: "tools" },
+    { name: "VS Code", image: "/skills/vscode.webp", category: "tools" },
+    { name: "WordPress", image: "/skills/wordpress.webp", category: "cms" },
+    { name: "Bootstrap", image: "/skills/brand.webp", category: "ui" },
   ];
 
   // Check screen size

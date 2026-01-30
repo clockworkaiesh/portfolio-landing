@@ -81,7 +81,7 @@ export default function Footer() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
-        className=" max-w-5xl w-full px-6 text-center "
+        className=" max-w-5xl w-full px-6 text-center relative z-50"
       >
         <SplitText
           text="Let's Talk"
@@ -184,7 +184,7 @@ export default function Footer() {
 
       <motion.img
         className="absolute bottom-14 left-10 size-[80px]"
-        src="/shapes/purple-blob1.png"
+        src="/shapes/purple-blob1.webp"
         alt=""
         loading="lazy"
         initial={{ opacity: 0 }}
@@ -199,7 +199,7 @@ export default function Footer() {
 
       <motion.img
         className="absolute bottom-32 -right-10"
-        src="/shapes/purple-blob2.png"
+        src="/shapes/purple-blob2.webp"
         alt=""
         loading="lazy"
         initial={{ opacity: 0 }}
@@ -214,7 +214,7 @@ export default function Footer() {
 
       <motion.img
         className="absolute top-32 left-1/2 size-[80px]"
-        src="/shapes/dots-big.png"
+        src="/shapes/dots-big.webp"
         alt=""
         loading="lazy"
         initial={{ opacity: 0 }}
