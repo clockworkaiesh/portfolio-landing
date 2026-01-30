@@ -1,6 +1,6 @@
 "use client";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import PrimaryButton from "@/components/PrimaryButton";
+import PrimaryButton from "@/components/atoms/PrimaryButton";
 import { useRouter } from "next/navigation";
 
 export default function NotFound() {

@@ -24,12 +24,14 @@ export default function WebMenu({ onItemClick }) {
   ];
 
   return (
-    <Dock 
-      items={items}
-      panelHeight={68}
-      baseItemSize={50}
-      magnification={70}
-      className="bg-dark-default/20 backdrop-blur-md scale-[0.9] lg:scale-100"
-    />
+    <nav aria-label="Main navigation" className='scale-[0.88] sm:scale-100 fixed bottom-1 left-1/2 -translate-x-1/2 z-50'>
+      <Dock
+        items={items}
+        panelHeight={68}
+        baseItemSize={50}
+        magnification={70}
+        className="bg-dark-default/20 backdrop-blur-md scale-[0.9] lg:scale-100"
+      />
+    </nav>
   );
 }

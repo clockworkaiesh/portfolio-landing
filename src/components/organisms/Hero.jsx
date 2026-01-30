@@ -2,12 +2,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import useReducedMotion from "../../hooks/useReducedMotion";
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const images = ["/2.webp", "/3.webp", "/5.webp"];
+  const prefersReducedMotion = useReducedMotion();
 
   // Check screen size
   useEffect(() => {
@@ -24,11 +26,12 @@ export default function Hero() {
 
   // Image rotation effect
   useEffect(() => {
+    if (prefersReducedMotion) return;
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 600);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [images.length, prefersReducedMotion]);
 
   // Get image size based on screen
   const getImageSize = () => {
@@ -57,11 +60,13 @@ export default function Hero() {
             src="/blob.gif"
             alt=""
             className="absolute -bottom-3 -left-2 opacity-[0.1] z-10"
+            aria-hidden="true"
           />
           <img
             src="/blob2.gif"
             alt=""
             className="absolute inset-3 opacity-[0.1] z-10"
+            aria-hidden="true"
           />
           {images.map((src, index) => (
             <img
@@ -70,7 +75,8 @@ export default function Hero() {
               className={`absolute z-50 inset-0 ${getImageSize()} object-contain transition-opacity duration-0 mx-auto ${
                 index === currentImageIndex ? "opacity-100" : "opacity-0"
               }`}
-              alt="Ayesha Naveed"
+              alt={index === currentImageIndex ? "Ayesha Naveed" : ""}
+              aria-hidden={index !== currentImageIndex}
             />
           ))}
         </div>
@@ -81,18 +87,18 @@ export default function Hero() {
         >
           <motion.h1
             className={`${isMobile ? "text-4xl sm:text-5xl" : isTablet ? "text-5xl" : "text-6xl lg:text-5xl xl:text-[80px]"} font-bold leading-[1.1] mb-3 md:mb-4`}
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut" }}
           >
             Ayesha Naveed
           </motion.h1>
 
           <motion.h2
             className={`${isMobile ? "text-md" : isTablet ? "text-xl" : "text-2xl lg:text-lg xl:text-2xl"} font-medium leading-[150%] text-neon-blue opacity-90`}
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut", delay: prefersReducedMotion ? 0 : 0.2 }}
           >
             Frontend Developer crafting fast, scalable, and human-centered web
             experiences.
@@ -100,9 +106,9 @@ export default function Hero() {
 
           <motion.p
             className={`${isMobile ? "text-md" : isTablet ? "text-lg md:text-xl" : "text-xl lg:text-lg xl:text-2xl"} text-text-muted leading-relaxed`}
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut", delay: prefersReducedMotion ? 0 : 0.4 }}
           >
             const experience = design + performance + usability;
           </motion.p>
@@ -111,7 +117,9 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div
-        className={`-scale-[0.8] rotate-180 absolute ${isMobile ? "bottom-8" : isTablet ? "bottom-36" : "bottom-10"} `}
+        className={`scale-[0.52] md:-scale-[0.8] md:rotate-180 absolute ${isMobile ? "-bottom-24" : isTablet ? "bottom-36" : "bottom-10"} `}
+        aria-hidden="true"
+        role="presentation"
       >
         <DotLottieReact
           src="https://lottie.host/23410713-3874-4301-9f7f-365585e0c013/45DnF5vmFR.lottie"

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import LightRays from './LightRays';
+import LightRays from '../atoms/LightRays';
 
 export default function FixedLightRays() {
   const [opacity, setOpacity] = useState(0.5);

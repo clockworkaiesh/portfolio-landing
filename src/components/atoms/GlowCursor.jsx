@@ -27,5 +27,5 @@ export default function GlowCursor() {
     };
   }, []);
 
-  return <div ref={ref} className="cursor-glow" style={{ opacity: 0 }} />;
+  return <div ref={ref} className="cursor-glow" style={{ opacity: 0 }} aria-hidden="true" />;
 }

@@ -1,6 +1,6 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "../components/SmoothScroll";
+import SmoothScroll from "../components/molecules/SmoothScroll";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",

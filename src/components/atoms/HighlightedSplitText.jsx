@@ -13,7 +13,8 @@ const HighlightedSplitText = ({
   threshold = 0.1,
   rootMargin = '0px',
   textAlign = 'center',
-  highlights = [] // Array of { word: 'word', color: 'neon-blue' | 'neon-purple' }
+  highlights = [], // Array of { word: 'word', color: 'neon-blue' | 'neon-purple' }
+  id
 }) => {
   const ref = useRef(null);
   const [mounted, setMounted] = useState(false);
@@ -113,59 +114,14 @@ const HighlightedSplitText = ({
     const textAlignClass = textAlign === 'left' ? 'text-left' : textAlign === 'right' ? 'text-right' : 'text-center';
     const classes = `overflow-hidden ${textAlignClass} ${className}`;
     const content = splitText(text, splitType);
-    
-    const TagComponent = splitType === 'lines' && tag === 'p' ? 'div' : tag;
-    
-    switch (TagComponent) {
-      case 'h1':
-        return (
-          <h1 ref={ref} className={classes}>
-            {content}
-          </h1>
-        );
-      case 'h2':
-        return (
-          <h2 ref={ref} className={classes}>
-            {content}
-          </h2>
-        );
-      case 'h3':
-        return (
-          <h3 ref={ref} className={classes}>
-            {content}
-          </h3>
-        );
-      case 'h4':
-        return (
-          <h4 ref={ref} className={classes}>
-            {content}
-          </h4>
-        );
-      case 'h5':
-        return (
-          <h5 ref={ref} className={classes}>
-            {content}
-          </h5>
-        );
-      case 'h6':
-        return (
-          <h6 ref={ref} className={classes}>
-            {content}
-          </h6>
-        );
-      case 'div':
-        return (
-          <div ref={ref} className={classes}>
-            {content}
-          </div>
-        );
-      default:
-        return (
-          <p ref={ref} className={classes}>
-            {content}
-          </p>
-        );
-    }
+
+    const Tag = splitType === 'lines' && tag === 'p' ? 'div' : tag;
+
+    return (
+      <Tag ref={ref} id={id} className={classes}>
+        {content}
+      </Tag>
+    );
   };
 
   return renderTag();

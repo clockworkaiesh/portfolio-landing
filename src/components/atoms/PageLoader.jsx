@@ -40,11 +40,15 @@ export default function PageLoader({ onFinished }) {
 
   return (
     <div
+      role="status"
+      aria-live="polite"
+      aria-label="Loading page content"
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-dark-default transition-opacity duration-700 ${
         fadeOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      <div className="w-40 h-40 sm:w-52 sm:h-52">
+      <span className="sr-only">Loading, please wait...</span>
+      <div className="w-40 h-40 sm:w-52 sm:h-52" aria-hidden="true">
         <DotLottieReact
           src="https://lottie.host/72c6a8cf-e60f-4775-972f-61ccd1f37278/gMEhieb4oG.lottie"
           loop

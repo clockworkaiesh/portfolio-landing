@@ -47,8 +47,9 @@ export default function SocialLinks({ className = "", showAnimation = true, stag
   ];
 
   return (
-    <div
-      className={`flex justify-center items-center space-x-6 ${!stagger && showAnimation ? 'animate-fade-up' : ''} ${className}`}
+    <nav
+      aria-label="Social links"
+      className={`flex justify-center items-center space-x-4 md:space-x-6 ${!stagger && showAnimation ? 'animate-fade-up' : ''} ${className}`}
       style={!stagger && showAnimation ? { animationDelay: '200ms' } : {}}
     >
       {socialLinks.map((link, index) => {
@@ -59,7 +60,7 @@ export default function SocialLinks({ className = "", showAnimation = true, stag
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md bg-dark-light border-text-muted border transition-all ease-in hover:bg-dark-default"
+            className="group flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full backdrop-blur-md bg-dark-light border-text-muted border transition-all ease-in hover:bg-dark-default"
             aria-label={link.label}
             custom={index}
             variants={iconVariants}
@@ -67,7 +68,7 @@ export default function SocialLinks({ className = "", showAnimation = true, stag
             whileInView="visible"
             viewport={{ once: true, margin: "-20%" }}
           >
-            <IconComponent className="text-white text-xl group-hover:scale-110 transition-transform duration-300" />
+            <IconComponent className="text-white text-lg md:text-xl group-hover:scale-110 transition-transform duration-300" />
           </motion.a>
         ) : (
           <a
@@ -75,13 +76,13 @@ export default function SocialLinks({ className = "", showAnimation = true, stag
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md bg-dark-light border-text-muted border transition-all ease-in hover:bg-dark-default"
+            className="group flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full backdrop-blur-md bg-dark-light border-text-muted border transition-all ease-in hover:bg-dark-default"
             aria-label={link.label}
           >
             <IconComponent className="text-white text-xl group-hover:scale-110 transition-transform duration-300" />
           </a>
         );
       })}
-    </div>
+    </nav>
   );
 }

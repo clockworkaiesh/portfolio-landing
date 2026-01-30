@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useEffect, useState, memo } from "react";
-import SplitText from "./SplitText";
-import SocialLinks from "./SocialLinks";
+import SplitText from "../atoms/SplitText";
+import SocialLinks from "../molecules/SocialLinks";
 
 const Contact = memo(function Contact() {
   const containerRef = useRef(null);
@@ -163,8 +163,9 @@ const Contact = memo(function Contact() {
   };
 
   return (
-    <div 
+    <section
       ref={containerRef}
+      aria-labelledby="contact-section-heading"
       className="text-center w-screen h-[60dvh] relative flex flex-col justify-center items-center px-6 overflow-hidden"
     >
       <div 
@@ -178,6 +179,7 @@ const Contact = memo(function Contact() {
         <SplitText
           text="Let's Talk "
           tag="h2"
+          id="contact-section-heading"
           className="section-heading"
           stagger={0.05}
           duration={0.8}
@@ -203,8 +205,9 @@ const Contact = memo(function Contact() {
       {/* Parallax decorative images with cursor interaction */}
       <img 
         className="absolute bottom-14 left-10 -translate-x-1/2 size-[80px] parallax-element parallax-layer-1 transition-all duration-300 ease-out cursor-pointer" 
-        src="/shapes/purple-blob1.png" 
-        alt="blob1"
+        src="/shapes/purple-blob1.png"
+        alt=""
+        aria-hidden="true"
         style={{
           transform: `${getParallaxTransform(-100)} ${getParallaxRotation(45)} ${getCursorTransform(15)} ${getCursorScale(1, 0.15)}`,
           opacity: isVisible ? 1 : 0,
@@ -214,8 +217,9 @@ const Contact = memo(function Contact() {
       
       <img 
         className="absolute bottom-32 -right-10 parallax-element parallax-layer-2 transition-all duration-300 ease-out opacity-10 cursor-pointer" 
-        src="/shapes/purple-blob2.png" 
-        alt="blob2"
+        src="/shapes/purple-blob2.png"
+        alt=""
+        aria-hidden="true"
         style={{
           transform: `${getParallaxTransform(-60)} ${getParallaxRotation(-30)} ${getCursorTransform(-10)} ${getCursorScale(1, 0.1)}`,
           opacity: isVisible ? 0.5 : 0,
@@ -225,15 +229,16 @@ const Contact = memo(function Contact() {
       
       <img 
         className="absolute top-32 left-1/2 opacity-50 parallax-element parallax-layer-3 transition-all duration-300 ease-out size-[80px] cursor-pointer" 
-        src="/shapes/dots-big.png" 
-        alt="dots"
+        src="/shapes/dots-big.png"
+        alt=""
+        aria-hidden="true"
         style={{
           transform: `${getParallaxTransform(120)} ${getParallaxRotation(-15)} ${getCursorTransform(8)} ${getCursorScale(1, 0.2)}`,
           opacity: isVisible ? 0.4 : 0,
           willChange: 'transform, opacity'
         }}
       />
-    </div>
+    </section>
   );
 });
 

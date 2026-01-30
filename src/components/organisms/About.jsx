@@ -1,15 +1,17 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import SplitText from "./SplitText";
-import HighlightedSplitText from "./HighlightedSplitText";
+import SplitText from "../atoms/SplitText";
+import HighlightedSplitText from "../atoms/HighlightedSplitText";
 import dynamic from "next/dynamic";
+import useReducedMotion from "../../hooks/useReducedMotion";
 
-const PixelBlast = dynamic(() => import("./PixelBlast"), { ssr: false });
+const PixelBlast = dynamic(() => import("../atoms/PixelBlast"), { ssr: false });
 
 export default function About() {
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 1024);
@@ -28,12 +30,13 @@ export default function About() {
   }, []);
 
   return (
-    <div
+    <section
       ref={containerRef}
+      aria-labelledby="about-heading"
       className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-hidden relative"
     >
       {/* PixelBlast background - desktop only */}
-      {isDesktop && <div className="w-full h-full absolute inset-5 opacity-20">
+      {isDesktop && !prefersReducedMotion && <div className="w-full h-full absolute inset-5 opacity-20" aria-hidden="true">
         <PixelBlast
           variant="circle"
           pixelSize={7}
@@ -55,6 +58,7 @@ export default function About() {
         <SplitText
           text="Who am I?"
           tag="h2"
+          id="about-heading"
           className="section-heading"
           stagger={0.05}
           duration={0.7}
@@ -87,6 +91,6 @@ export default function About() {
           ]}
         />
       </div>
-    </div>
+    </section>
   );
 }

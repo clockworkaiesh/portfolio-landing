@@ -4,40 +4,20 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import SplitText from "./SplitText";
-import portfolioData from "../portfolioData.js";
+import SplitText from "../atoms/SplitText";
+import WorkCard from "../molecules/WorkCard";
+import portfolioData from "../../portfolioData.js";
+import useReducedMotion from "../../hooks/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PixelBlast = dynamic(() => import("./PixelBlast"), { ssr: false });
-
-function WorkCard({ item }) {
-  return (
-    <div className="bg-dark-light border border-dark-softer rounded-2xl overflow-hidden transition-all duration-300 hover:border-neon-blue/30 hover:shadow-[0_0_30px_rgba(0,240,255,0.1)] flex flex-col">
-      <div className="relative h-48 sm:h-56 overflow-hidden bg-gradient-to-br from-dark-softer to-dark-light">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="w-full h-full object-contain"
-          loading="lazy"
-        />
-      </div>
-      <div className="p-5 sm:p-6 flex-1 flex flex-col">
-        <h3 className="text-xl sm:text-2xl font-bold text-text-heading mb-3">
-          {item.title}
-        </h3>
-        <p className="text-sm sm:text-base text-text-muted leading-relaxed">
-          {item.description}
-        </p>
-      </div>
-    </div>
-  );
-}
+const PixelBlast = dynamic(() => import("../atoms/PixelBlast"), { ssr: false });
 
 export default function Work() {
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -47,7 +27,7 @@ export default function Work() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile || prefersReducedMotion) return;
 
     const panels = gsap.utils.toArray(".work-panel");
     if (!panels.length) return;
@@ -78,15 +58,16 @@ export default function Work() {
         triggerRef.current._gsapCtx.revert();
       }
     };
-  }, [isMobile]);
+  }, [isMobile, prefersReducedMotion]);
 
   return (
-    <div className="vertical-spacing">
+    <section aria-labelledby="work-heading" className="vertical-spacing">
       {/* Header */}
       <div className="pb-12 max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <SplitText
           text="What do I do?"
           tag="h2"
+          id="work-heading"
           className="section-heading"
           stagger={0.05}
           duration={0.7}
@@ -106,16 +87,16 @@ export default function Work() {
         />
       </div>
 
-      {isMobile ? (
-        /* Mobile: Stacked cards */
-        <div className="grid grid-cols-1 gap-6 px-4 sm:px-6 max-w-4xl mx-auto pb-12">
+      {isMobile || prefersReducedMotion ? (
+        /* Mobile / reduced-motion: Stacked cards */
+        <div className="grid grid-cols-1 gap-6 px-6 max-w-4xl mx-auto pb-12">
           {portfolioData.map((item, index) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : index * 0.1 }}
             >
               <WorkCard item={item} />
             </motion.div>
@@ -124,7 +105,7 @@ export default function Work() {
       ) : (
         /* Desktop: Horizontal scroll */
         <div ref={triggerRef} className="relative overflow-hidden">
-          <div className="w-full h-full absolute inset-0 opacity-20 pointer-events-none z-0">
+          <div className="w-full h-full absolute inset-0 opacity-20 pointer-events-none z-0" aria-hidden="true">
             <PixelBlast
               variant="circle"
               pixelSize={6}
@@ -151,7 +132,7 @@ export default function Work() {
                 style={{ width: `${100 / portfolioData.length}%` }}
               >
                 <div className="layout-wrapper">
-                  <div className="rounded-2xl overflow-hidden flex flex-row backdrop-blur-md">
+                  <article className="rounded-2xl overflow-hidden flex flex-row backdrop-blur-md">
                     <div className="relative rounded-2xl h-[400px] w-1/2 overflow-hidden bg-gradient-to-br from-dark-softer to-dark-light">
                       <img
                         src={project.image}
@@ -175,6 +156,7 @@ export default function Work() {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple text-sm sm:text-base font-medium text-text-heading hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
+                              aria-label={`View live site for ${project.title} (opens in new tab)`}
                             >
                               View Live Site
                             </a>
@@ -185,6 +167,7 @@ export default function Work() {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-dark-softer text-sm sm:text-base font-medium text-text-base hover:bg-dark-softer/80 transition-all duration-300"
+                              aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                             >
                               View Source Code
                             </a>
@@ -192,13 +175,13 @@ export default function Work() {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </article>
                 </div>
               </div>
             ))}
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }

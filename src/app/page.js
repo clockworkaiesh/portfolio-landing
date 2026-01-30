@@ -1,15 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Work from "../components/Work";
-import Skills from "../components/Skills";
-import Footer from "../components/Footer";
-import WebMenu from "../components/WebMenu";
-import GlowCursor from "@/components/GlowCursor";
-import PrimaryButton from "@/components/PrimaryButton";
-import Projects from "@/components/Projects";
-import PageLoader from "@/components/PageLoader";
+import Hero from "../components/organisms/Hero";
+import About from "../components/organisms/About";
+import Work from "../components/organisms/Work";
+import Skills from "../components/organisms/Skills";
+import Footer from "../components/organisms/Footer";
+import WebMenu from "../components/molecules/WebMenu";
+import GlowCursor from "@/components/atoms/GlowCursor";
+import PrimaryButton from "@/components/atoms/PrimaryButton";
+import Projects from "@/components/organisms/Projects";
+import PageLoader from "@/components/atoms/PageLoader";
+import SkipToContent from "@/components/atoms/SkipToContent";
 import Image from "next/image";
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
 
   return (
     <>
+      <SkipToContent />
       <PageLoader onFinished={() => setLoaded(true)} />
 
       {/* Fixed Header */}
@@ -60,7 +62,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="relative w-full overflow-x-hidden">
+      <main id="main-content" className="relative w-full overflow-x-hidden">
         {/* Page Content */}
         <div id="page-content" className="relative z-10 bg-dark-default ">
           <div id="hero">
@@ -76,12 +78,12 @@ export default function Home() {
             <Work />
           </div>
 
-          <section
+          <div
             id="projects"
             className="section min-h-screen w-full flex items-center justify-center"
           >
             <Projects />
-          </section>
+          </div>
         </div>
 
         {/* Footer */}
