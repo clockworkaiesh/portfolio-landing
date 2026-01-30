@@ -20,7 +20,7 @@ export default function NotFound() {
         Page not found
       </h1>
       <p className="text-text-secondary text-sm mt-2 mb-8">
-        The page you're looking for doesn't exist.
+        The page you&apos;re looking for doesn&apos;t exist.
       </p>
 
       <PrimaryButton text="Go Home" onClick={() => router.push("/")} />
