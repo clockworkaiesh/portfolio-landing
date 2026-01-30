@@ -1,9 +1,9 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, memo } from "react";
 import SplitText from "./SplitText";
 import SocialLinks from "./SocialLinks";
 
-export default function Contact() {
+const Contact = memo(function Contact() {
   const containerRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
   const [contentScrollY, setContentScrollY] = useState(0);
@@ -235,4 +235,6 @@ export default function Contact() {
       />
     </div>
   );
-}
+});
+
+export default Contact;

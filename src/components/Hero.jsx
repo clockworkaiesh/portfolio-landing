@@ -1,6 +1,7 @@
 "use client";
-import SplitText from "./SplitText";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -32,7 +33,7 @@ export default function Hero() {
   // Get image size based on screen
   const getImageSize = () => {
     if (isMobile) return "size-[280px] sm:size-[320px]";
-    if (isTablet) return "size-[350px] md:size-[380px]";
+    if (isTablet) return "size-[350px] md:size-[280px]";
     return "size-[400px] lg:size-[420px]";
   };
 
@@ -44,100 +45,82 @@ export default function Hero() {
   };
 
   return (
-    <div className=" flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 lg:px-6 relative">
-      <div className={`flex ${isMobile ? 'flex-col-reverse' : 'flex-row'} justify-between items-center mx-auto w-full max-w-6xl gap-8 md:gap-12lg:gap-16`}>
-        
+    <div className="hero-container">
+      <div
+        className={`flex ${isMobile ? "flex-col-reverse" : "flex-row"} justify-between items-center mx-auto w-full max-w-6xl gap-8 md:gap-12lg:gap-16`}
+      >
         {/* Image Container - Position based on screen size */}
-        <div className={`${isMobile ? 'w-full max-w-[300px] order-2' : 'order-1'} ${getContainerSize()} relative overflow-hidden`}>
+        <div
+          className={`relative ${isMobile ? "w-full max-w-1/3 lg:max-w-[300px] order-2" : "order-1"} ${getContainerSize()} relative overflow-hidden`}
+        >
+          <img
+            src="/blob.gif"
+            alt="blob"
+            className="absolute -bottom-3 -left-2 opacity-[0.1]"
+          />
+          <img
+            src="/blob2.gif"
+            alt="blob"
+            className="absolute inset-3 opacity-[0.1]"
+          />
+
           {images.map((src, index) => (
             <img
               key={src}
               src={src}
-              className={`absolute inset-0 ${getImageSize()} object-contain transition-opacity duration-0 mx-auto ${
+              className={`absolute z-50 inset-0 ${getImageSize()} object-contain transition-opacity duration-0 mx-auto ${
                 index === currentImageIndex ? "opacity-100" : "opacity-0"
               }`}
               alt="Ayesha Naveed"
             />
           ))}
         </div>
-        
+
         {/* Text Content */}
-        <div className={`${isMobile ? 'w-full text-center order-1' : 'order-2 text-left'} flex-1`}>
-          <SplitText
-            text="Ayesha Naveed"
-            tag="h1"
-            className={`${isMobile ? 'text-4xl sm:text-5xl' : isTablet ? 'text-5xl md:text-6xl' : 'text-6xl lg:text-7xl'} font-bold leading-[1.1] mb-4 md:mb-6`}
-            stagger={0.05}
-            duration={0.8}
-            splitType="chars"
-            threshold={0.3}
-            rootMargin="0px"
-            textAlign={isMobile ? "center" : "left"}
-          />
-          
-          <SplitText
-            text="Frontend Developer & UI/UX Enthusiast"
-            tag="h2"
-            className={`${isMobile ? 'text-lg sm:text-xl' : isTablet ? 'text-xl md:text-2xl' : 'text-2xl lg:text-3xl'} font-medium leading-[150%] mb-3 md:mb-4 text-neon-blue opacity-90`}
-            stagger={0.03}
-            duration={0.7}
-            splitType="words"
-            threshold={0.3}
-            rootMargin="0px"
-            textAlign={isMobile ? "center" : "left"}
-          />
-          
-          <div className="space-y-2 md:space-y-3">
-            <SplitText
-              text="Where logic meets motion."
-              tag="p"
-              className={`${isMobile ? 'text-base sm:text-lg' : isTablet ? 'text-lg md:text-xl' : 'text-xl'} text-text-muted leading-relaxed`}
-              stagger={0.02}
-              duration={0.6}
-              splitType="lines"
-              threshold={0.3}
-              rootMargin="0px"
-              textAlign={isMobile ? "center" : "left"}
-            />
-            
-            <SplitText
-              text="Scroll to explore."
-              tag="p"
-              className={`${isMobile ? 'text-base sm:text-lg' : isTablet ? 'text-lg md:text-xl' : 'text-xl'} text-text-muted leading-relaxed`}
-              stagger={0.02}
-              duration={0.6}
-              splitType="lines"
-              threshold={0.3}
-              rootMargin="0px"
-              textAlign={isMobile ? "center" : "left"}
-            />
-          </div>
+        <div
+          className={`${isMobile ? "w-full text-center order-1" : isTablet ? "order-2 w-[50%] min-w-[50%]" : "order-2 text-left"} flex-1`}
+        >
+          <motion.h1
+            className={`${isMobile ? "text-4xl sm:text-5xl" : isTablet ? "text-5xl" : "text-6xl lg:text-5xl xl:text-[80px]"} font-bold leading-[1.1] mb-3 md:mb-4`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            Ayesha Naveed
+          </motion.h1>
+
+          <motion.h2
+            className={`${isMobile ? "text-lg" : isTablet ? "text-xl" : "text-2xl lg:text-lg xl:text-2xl"} font-medium leading-[150%] text-neon-blue opacity-90`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          >
+            Frontend Developer crafting fast, scalable, and human-centered web experiences.
+          </motion.h2>
+
+          <motion.p
+            className={`${isMobile ? "text-base sm:text-lg" : isTablet ? "text-lg md:text-xl" : "text-xl lg:text-lg xl:text-2xl"} text-text-muted leading-relaxed`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
+          >
+            const experience = design + performance + usability;
+          </motion.p>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <svg
-        fill="#ffffff50"
-        height="40px"
-        width="40px"
-        version="1.1"
-        id="Capa_1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 490 490"
-        stroke="#ffffff50"
-        className={`absolute ${isMobile ? '-bottom-16' : isTablet ? '-bottom-14' : 'bottom-10'} animate-bounce `}
+      <div
+        className={`-scale-[0.7] rotate-180 absolute ${isMobile ? "-bottom-16" : isTablet ? "bottom-36" : "bottom-24"} `}
       >
-        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        ></g>
-        <g id="SVGRepo_iconCarrier">
-          <polygon points="237.339,0 237.339,458.069 99.333,300.928 87.832,311.038 244.996,490 402.168,311.038 390.652,300.928 252.654,458.069 252.654,0 "></polygon>
-        </g>
-      </svg>
+        <DotLottieReact
+                      src="https://lottie.host/23410713-3874-4301-9f7f-365585e0c013/45DnF5vmFR.lottie"
+
+
+          loop
+          autoplay
+        />
+      </div>
     </div>
   );
 }

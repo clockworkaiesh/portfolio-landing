@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SplitText from "./SplitText";
 
 export default function Skills() {
   const containerRef = useRef(null);
@@ -147,24 +148,35 @@ export default function Skills() {
   return (
     <div
       ref={containerRef}
-      className="w-screen min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12 lg:py-0 lg:h-screen"
+      className="w-screen min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 vertical-spacing"
     >
       {/* Content */}
       <div className="w-full max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div
+        <div
           className="text-center mb-8 sm:mb-10 lg:mb-12 px-4"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-text-heading mb-3 sm:mb-4">
-            Technical Toolkit
-          </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-text-muted max-w-2xl lg:max-w-3xl mx-auto">
-            A curated selection of technologies I use to build exceptional digital experiences
-          </p>
-        </motion.div>
+          <SplitText
+            text="Technical Toolkit"
+            tag="h2"
+            className="section-heading"
+            stagger={0.05}
+            duration={0.7}
+            splitType="chars"
+            threshold={0.3}
+            rootMargin="0px"
+          />
+          <SplitText
+            text="A curated selection of technologies I use to build exceptional digital experiences"
+            tag="p"
+            className="paragraph"
+            stagger={0.02}
+            duration={0.6}
+            splitType="words"
+            threshold={0.3}
+            rootMargin="0px"
+          />
+        </div>
 
         {/* Skills Grid */}
         <motion.div

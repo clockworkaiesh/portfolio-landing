@@ -1,256 +1,83 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Work from "../components/Work";
 import Skills from "../components/Skills";
-import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 import WebMenu from "../components/WebMenu";
 import GlowCursor from "@/components/GlowCursor";
 import PrimaryButton from "@/components/PrimaryButton";
 import Projects from "@/components/Projects";
+import PageLoader from "@/components/PageLoader";
+import Image from "next/image";
 
 export default function Home() {
-  const containerRef = useRef(null);
-  const [currentSection, setCurrentSection] = useState(0);
-  const [previousSection, setPreviousSection] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    let isScrolling = false;
-    let scrollTimeout;
-
-    // Enhanced scroll behavior with debouncing
-    const handleWheel = (e) => {
-      e.preventDefault();
-      
-      if (isScrolling) return;
-      
-      const container = containerRef.current;
-      if (!container) return;
-
-      const delta = e.deltaY;
-      const scrollAmount = window.innerHeight;
-      
-      // Skip scroll handling if we're in the Work section (let Work component handle it)
-      if (currentSection === 3) {
-        return;
-      }
-      
-      isScrolling = true;
-      
-      if (delta > 0) {
-        // Scrolling down
-        if (currentSection < 5) { // 6 sections total (0-5)
-          setCurrentSection(prev => prev + 1);
-          container.scrollBy({
-            top: scrollAmount,
-            behavior: 'smooth'
-          });
-        }
-      } else {
-        // Scrolling up
-        if (currentSection > 0) {
-          setCurrentSection(prev => prev - 1);
-          container.scrollBy({
-            top: -scrollAmount,
-            behavior: 'smooth'
-          });
-        }
-      }
-
-      // Reset scrolling flag after animation completes
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-      }, 800);
-    };
-
-    // Keyboard navigation support
-    const handleKeyDown = (e) => {
-      if (isScrolling) return;
-      
-      const container = containerRef.current;
-      if (!container) return;
-
-      const scrollAmount = window.innerHeight;
-      
-      // Skip keyboard handling if we're in the Work section (let Work component handle it)
-      if (currentSection === 3) {
-        return;
-      }
-      
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        e.preventDefault();
-        isScrolling = true;
-        
-        if (currentSection < 5) {
-          setCurrentSection(prev => prev + 1);
-          container.scrollBy({
-            top: scrollAmount,
-            behavior: 'smooth'
-          });
-        }
-        
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          isScrolling = false;
-        }, 800);
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        isScrolling = true;
-        
-        if (currentSection > 0) {
-          setCurrentSection(prev => prev - 1);
-          container.scrollBy({
-            top: -scrollAmount,
-            behavior: 'smooth'
-          });
-        }
-        
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          isScrolling = false;
-        }, 800);
-      }
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('wheel', handleWheel, { passive: false });
-      document.addEventListener('keydown', handleKeyDown);
-      
-      return () => {
-        container.removeEventListener('wheel', handleWheel);
-        document.removeEventListener('keydown', handleKeyDown);
-        clearTimeout(scrollTimeout);
-      };
-    }
-  }, [currentSection]);
-
-  // Track current section based on scroll position
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const scrollTop = container.scrollTop;
-      const sectionHeight = window.innerHeight;
-      const newSection = Math.round(scrollTop / sectionHeight);
-      
-      if (newSection !== currentSection) {
-        setPreviousSection(currentSection);
-        setCurrentSection(newSection);
-      }
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, [currentSection]);
-
-  const handleItemClick = (index) => {
-    setCurrentSection(index);
-    const sections = document.querySelectorAll('.section');
-    if (sections[index]) {
-      sections[index].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
-
-  const handleExitWork = (direction) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const scrollAmount = window.innerHeight;
-    
-    if (direction === 'down') {
-      // Move to next section (Projects)
-      if (currentSection < 5) {
-        setCurrentSection(4);
-        container.scrollBy({
-          top: scrollAmount,
-          behavior: 'smooth'
-        });
-      }
-    } else if (direction === 'up') {
-      // Move to previous section (Skills)
-      if (currentSection > 0) {
-        setCurrentSection(2);
-        container.scrollBy({
-          top: -scrollAmount,
-          behavior: 'smooth'
-        });
-      }
-    }
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <>
-      {/* Fixed Logo - Absolute positioned, NOT sticky */}
-      <div className="absolute top-0 left-0 right-0 z-50">
-        <div className="layout-wrapper flex items-center justify-between py-5">
-          <div 
+      <PageLoader onFinished={() => setLoaded(true)} />
+
+      {/* Fixed Header */}
+      <header className="z-50 pointer-events-none bg-dark-default">
+        <div className="layout-wrapper flex items-center justify-between py-3 pl-3 pr-5 pointer-events-auto ">
+          <div
             className="cursor-pointer hover:scale-110 transition-transform duration-200"
-            onClick={() => handleItemClick(0)}
+            onClick={() => scrollTo("hero")}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                handleItemClick(0);
-              }
+              if (e.key === "Enter" || e.key === " ") scrollTo("hero");
             }}
             aria-label="Navigate to home section"
           >
-            <img 
-              src="/ayesha-naveed-logo.svg" 
-              alt="Ayesha Naveed" 
+            <Image
+              src="/ayesha-naveed-logo.svg"
+              alt="Ayesha Naveed"
               className="w-16 h-16 hover:opacity-80 transition-opacity duration-200"
+              width={64}
+              height={64}
             />
           </div>
           <PrimaryButton text="Contact" />
         </div>
-      </div>
+      </header>
 
-      <main ref={containerRef} className="scroll-container w-full">
-        <section className="scroll-section section layout-wrapper flex items-center justify-center section-bg text-text-heading">
-          <div className="relative z-10 w-full">
+      <main className="relative w-full overflow-x-hidden">
+        {/* Page Content */}
+        <div id="page-content" className="relative z-10 bg-dark-default ">
+          <div id="hero">
             <Hero />
           </div>
-        </section>
-        <section className="scroll-section section w-full flex items-center justify-center section-bg text-text-heading">
-          <div className="relative z-10">
+          <div id="about">
             <About />
           </div>
-        </section>
-        <section className="scroll-section section w-full flex items-center justify-center section-bg text-text-heading">
-          <div className="relative z-10">
+          <div id="skills">
             <Skills />
           </div>
-        </section>
-        <section className="scroll-section section w-full flex items-center justify-center section-bg text-text-heading">
-          <div className="relative z-10">
-            <Work 
-              isActive={currentSection === 3} 
-              enteredFromBelow={previousSection === 4 && currentSection === 3}
-              onExitWork={handleExitWork}
-            />
+          <div id="work">
+            <Work />
           </div>
-        </section>
-        <section className="scroll-section section w-full flex items-center justify-center section-bg text-text-heading">
-          <div className="relative z-10">
+
+          <section
+            id="projects"
+            className="section min-h-screen w-full flex items-center justify-center"
+          >
             <Projects />
-          </div>
-        </section>
-        <section className="scroll-section section w-full flex items-center justify-center section-bg text-text-heading">
-          <div className="relative z-10">
-            <Contact />
-          </div>
-        </section>
+          </section>
+        </div>
+
+        {/* Footer */}
+        <Footer />
       </main>
-      
-      {/* WebMenu Dock */}
-      <WebMenu onItemClick={handleItemClick} />
+
+      <WebMenu />
       <GlowCursor />
     </>
   );

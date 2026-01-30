@@ -9,38 +9,18 @@ import { RiHome9Line,
   RiMailUnreadLine } from "react-icons/ri";
 
 export default function WebMenu({ onItemClick }) {
- const items = [
-    { 
-      icon: <RiHome9Line size={21}/>, 
-      label: 'Home', 
-      onClick: () => onItemClick && onItemClick(0) // Hero section
-    },
-    { 
-      icon: <RiRobot3Line size={21} />, 
-      label: 'About', 
-      onClick: () => onItemClick && onItemClick(1) // About section
-    },
-     { 
-      icon: <RiCodeSSlashLine size={21} />, 
-      label: 'Skills', 
-      onClick: () => onItemClick && onItemClick(2) // Skills section
-    },
-    { 
-      icon: <RiBriefcase4Line size={21} />, 
-      label: 'Work', 
-      onClick: () => onItemClick && onItemClick(3) // Work section
-    },
-   
-    { 
-      icon: <RiFolder3Line size={21} />, 
-      label: 'Projects', 
-      onClick: () => onItemClick && onItemClick(4) // Projects section
-    },
-    { 
-      icon: <RiMailUnreadLine size={21} />, 
-      label: 'Contact', 
-      onClick: () => onItemClick && onItemClick(5) // Contact section
-    },
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const items = [
+    { icon: <RiHome9Line size={21}/>, label: 'Home', onClick: () => scrollTo('hero') },
+    { icon: <RiRobot3Line size={21} />, label: 'About', onClick: () => scrollTo('about') },
+    { icon: <RiCodeSSlashLine size={21} />, label: 'Skills', onClick: () => scrollTo('skills') },
+    { icon: <RiBriefcase4Line size={21} />, label: 'Work', onClick: () => scrollTo('work') },
+    { icon: <RiFolder3Line size={21} />, label: 'Projects', onClick: () => scrollTo('projects') },
+    { icon: <RiMailUnreadLine size={21} />, label: 'Contact', onClick: () => scrollTo('contact') },
   ];
 
   return (

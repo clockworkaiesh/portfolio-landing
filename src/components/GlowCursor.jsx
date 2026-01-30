@@ -1,47 +1,31 @@
-import React, { useState, useEffect } from "react";
+"use client";
+import { useRef, useEffect } from "react";
 
-function GlowCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
+export default function GlowCursor() {
+  const ref = useRef(null);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-      
-      if (!isVisible) {
-        setIsVisible(true);
-      }
+    const el = ref.current;
+    if (!el) return;
+
+    const onMove = (e) => {
+      el.style.background = `radial-gradient(300px at ${e.clientX}px ${e.clientY}px, rgba(79, 70, 229, 0.15), transparent)`;
+      el.style.opacity = "1";
     };
 
-    const handleMouseEnter = () => {
-      setIsVisible(true);
-    };
+    const onLeave = () => { el.style.opacity = "0"; };
+    const onEnter = () => { el.style.opacity = "1"; };
 
-    const handleMouseLeave = () => {
-      setIsVisible(false);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseenter", handleMouseEnter);
-    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mousemove", onMove, { passive: true });
+    document.addEventListener("mouseleave", onLeave);
+    document.addEventListener("mouseenter", onEnter);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseenter", handleMouseEnter);
-      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("mouseenter", onEnter);
     };
-  }, [isVisible]);
+  }, []);
 
-  return (
-    <div 
-      className={`cursor-glow ${isVisible ? 'visible' : 'hidden'}`}
-      style={{
-        background: `radial-gradient(300px at ${mousePosition.x}px ${mousePosition.y}px, rgba(79, 70, 229, 0.15), transparent)`
-      }}
-    />
-  );
+  return <div ref={ref} className="cursor-glow" style={{ opacity: 0 }} />;
 }
-export default GlowCursor;

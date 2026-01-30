@@ -6,7 +6,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: var(--font-montserrat), sans-serif;
   background: radial-gradient(
       circle at 20% 30%,
@@ -23,35 +22,29 @@ body {
       #0a0f1c 100%
     );
   background-attachment: fixed;
-  color: #e4e6eb; /* text-base */
-  position: relative;
+  color: #e4e6eb;
 }
-.layout-wrapper{
+
+html {
+  scroll-behavior: auto;
+}
+
+.layout-wrapper {
   @apply max-w-full w-[1280px] mx-auto;
 }
+
 .section {
   @apply text-center px-6;
 }
-/* Transparent section background with parallax feel */
-.section-bg {
-  background: transparent;
-  position: relative;
-  overflow: hidden;
+.hero-container{
+  @apply  flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 lg:px-6 relative;
+  height: calc(100dvh - 112px);
+}
+.paragraph{
+  @apply text-sm sm:text-base md:text-lg lg:text-xl text-text-muted leading-relaxed sm:leading-loose;
 }
 
-.section-bg::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: transparent;
-  pointer-events: none;
-  backdrop-filter: blur(0.5px);
-}
-
-/* Gradient button class */
+/* Gradient button */
 .gradient-button {
   background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ff00aa 100%);
   background-size: 200% 200%;
@@ -75,45 +68,21 @@ body {
 }
 
 @keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Custom scrollbar styling */
+/* Hide scrollbar */
 ::-webkit-scrollbar {
-  width: 0px; /* Hide vertical scrollbar */
-  height: 0px; /* Hide horizontal scrollbar */
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-dark-light;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-dark-softer rounded-[6px];
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-text-muted;
+  width: 0px;
+  height: 0px;
 }
 
 /* Fade up animation */
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-up {
@@ -122,46 +91,44 @@ body {
 }
 
 .section-heading {
-  @apply text-2xl lg:text-4xl xl:text-7xl font-bold leading-[150%] text-text-heading;
-  &.large{
-    @apply text-[95px];
-  }
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 ;
+  background: linear-gradient(220deg, #ffffff, #debdfa, #fff, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  line-height: 150% !important;
 }
-.hero{
+.vertical-spacing{
+  @apply py-[100px] md:py-[140px] lg:py-[180px] xl:py-[200px];
+}
+
+.hero {
   @apply flex justify-between items-center px-6;
   height: calc(100dvh - 96px);
-  border: 1px solid white;
 }
-.hero-title{
-    @apply text-[90px] font-bold leading-[100%] text-text-heading;
+
+.hero-title {
+  @apply text-[90px] font-bold leading-[100%] text-text-heading;
 }
+
 .section-content {
   @apply text-[2xl] mx-auto text-[18px] 2xl:text-[24px] opacity-[0.8] leading-[150%];
 }
 
-/* Custom cursor styles - Brittany Chiang style */
+/* Cursor glow */
 .cursor-glow {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 30;
-  transition-duration: 0.3s;
-  transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
-    backdrop-filter, webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cursor-glow.hidden {
   opacity: 0;
 }
 
-/* Hide default cursor */
-/* * {
-  cursor: none !important;
-} */
-
-/* Show default cursor for text inputs and textareas */
+/* Text input cursor */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -169,96 +136,7 @@ textarea {
   cursor: text !important;
 }
 
-.circle {
-  @apply cursor-none absolute top-[200px] left-[200px] w-0 h-0 rounded-[50%];
-  background: linear-gradient(
-    135deg,
-    rgb(168, 85, 247) 0%,
-    rgb(139, 92, 246) 100%
-  );
-  box-shadow: 0 0 50px rgba(168, 85, 247, 1), 0 0 100px rgba(139, 92, 246, 1);
-}
-
-/* Ensure div with section-content behaves like paragraph */
-div.section-content {
-  display: block;
-  margin: 0;
-}
-
-/* Vertical scrolling layout */
-html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
-}
-
-body {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* Ensure sections take full viewport height */
-.section {
-  min-height: 100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* Smooth scroll container */
-.scroll-container {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  overflow-y: scroll;
-  height: 100vh;
-}
-
-/* Enhanced scroll snapping */
-.scroll-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  min-height: 100vh;
-}
-.scroll-section.of-hero {
-  height: calc(100vh - 110px); /* Adjust for fixed header height */
-  min-height: calc(100vh - 110px); /* Adjust for fixed header height */
-
-}
-
-/* Smooth scroll behavior for better snapping */
-* {
-  scroll-behavior: smooth;
-}
-
-/* Prevent scroll chaining */
-.scroll-container {
-  overscroll-behavior: contain;
-}
-
-/* Enhanced scroll snapping with better timing */
-@supports (scroll-snap-type: y mandatory) {
-  .scroll-container {
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: 0;
-  }
-
-  .scroll-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-}
-
-/* Parallax performance optimizations */
-.parallax-element {
-  will-change: transform;
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* Smooth parallax transitions */
-.parallax-smooth {
-  transition: transform 0.1s ease-out;
-}
-
-/* Enhanced about section parallax background */
+/* About section parallax bg */
 .about-parallax-bg {
   position: absolute;
   top: 0;
@@ -269,126 +147,35 @@ body {
   z-index: -1;
 }
 
-/* Staggered content animation */
-.content-wrapper {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Parallax layers */
+.parallax-element {
   will-change: transform;
+  backface-visibility: hidden;
 }
 
-/* Enhanced parallax layers */
-.parallax-layer-1 {
-  z-index: 1;
-  transition: transform 0.1s ease-out;
-}
-
-.parallax-layer-2 {
-  z-index: 2;
-  transition: transform 0.15s ease-out;
-}
-
-.parallax-layer-3 {
-  z-index: 3;
-  transition: transform 0.2s ease-out;
-}
-
-/* Section entrance/exit animations */
-.section-entering {
-  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.section-exiting {
-  animation: fadeOutDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeOutDown {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-}
-
-/* Shape entrance animations */
-.shape-entering {
-  animation: shapeFadeIn 0.5s ease-out forwards;
-}
-
-.shape-exiting {
-  animation: shapeFadeOut 0.3s ease-out forwards;
-}
-
-@keyframes shapeFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes shapeFadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-}
-
-/* Skills staggered animation */
+/* Skills */
 .skill-item {
   will-change: transform, opacity;
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
-/* Smooth skills animation without blinking */
-.skills-grid {
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
+.source-code-img::before {
+  content: "";
+  opacity: 0.5;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("/code-snap-shot.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  bottom: -40%;
+  right: -30%;
 }
 
-.source-code-img {
-  &::before {
-    content: "";
-    opacity: 0.5;
-    z-index: -1;
-    pointer-events: none;
-    background-image: url("/code-snap-shot.png");
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 50%;
-    height: 100%;
-    position: absolute;
-    bottom: -40%;
-    right: -30%;
-  }
-}
-
-/* From Uiverse.io by Navarog21 */
-/* From Uiverse.io by suda-code */ 
-/* Add these to your global CSS file */
-
-/* Button hover animations */
+/* Button styles */
 .primary-button {
   position: relative;
   isolation: isolate;
@@ -399,11 +186,8 @@ body {
 .primary-button::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, 
+  inset: 0;
+  background: linear-gradient(135deg,
     rgba(0, 240, 255, 0.1) 0%,
     rgba(168, 85, 247, 0.1) 50%,
     rgba(0, 240, 255, 0.1) 100%);
@@ -420,7 +204,7 @@ body {
 
 .primary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 10px 40px rgba(0, 240, 255, 0.2),
     0 0 20px rgba(168, 85, 247, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -432,35 +216,21 @@ body {
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* Enhanced focus states */
 .primary-button:focus-visible {
   outline: 2px solid rgba(0, 240, 255, 0.6);
   outline-offset: 4px;
-  box-shadow: 
-    0 0 0 4px rgba(10, 15, 28, 0.8),
-    0 0 30px rgba(0, 240, 255, 0.4);
 }
 
-/* Micro-interaction dots animation */
 @keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
 .button-dot {
   animation: pulseGlow 2s ease-in-out infinite;
 }
+
