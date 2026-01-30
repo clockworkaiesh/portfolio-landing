@@ -117,7 +117,7 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div
-        className={`scale-[0.52] md:-scale-[0.8] md:rotate-180 absolute ${isMobile ? "-bottom-24" : isTablet ? "bottom-36" : "bottom-10"} `}
+        className={`scale-[0.52] md:-scale-[0.6] lg:scale-[0.6] hidden md:block md:rotate-180 lg:rotate-0 absolute ${isMobile ? "-bottom-24" : isTablet ? "-bottom-[4%]" : "bottom-0"} `}
         aria-hidden="true"
         role="presentation"
       >
