@@ -8,6 +8,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import SplitText from "./SplitText";
 import SocialLinks from "./SocialLinks";
 
@@ -33,6 +34,11 @@ export default function Footer() {
 
   useEffect(() => {
     async function loadArticles() {
+      const cached = sessionStorage.getItem("mediumArticles");
+      if (cached) {
+        setArticles(JSON.parse(cached));
+        return;
+      }
       try {
         const res = await fetch(
           "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@ayeshanaved23",
@@ -46,6 +52,7 @@ export default function Footer() {
         }));
 
         setArticles(latest);
+        sessionStorage.setItem("mediumArticles", JSON.stringify(latest));
       } catch (err) {
         console.error("Medium fetch failed", err);
       }
@@ -105,7 +112,7 @@ export default function Footer() {
 
         {/* Social Links */}
         <div className="mt-8 flex justify-center gap-6 flex-wrap">
-          <SocialLinks />
+          <SocialLinks stagger />
         </div>
 
         {/* --- Medium Articles --- */}
@@ -133,7 +140,7 @@ export default function Footer() {
                     href={article.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg opacity-80 hover:opacity-100 transition-opacity"
+                    className="text-sm md:text-base xl:text-lg opacity-80 hover:opacity-100 transition-opacity line-clamp-2 lg:line-clamp-3"
                   >
                     {article.title}
                   </a>
@@ -142,17 +149,37 @@ export default function Footer() {
             )}
           </div>
 
-            <a
+          <a
             href="https://medium.com/@ayeshanaved23"
             target="_blank"
             className="text-sm opacity-50 mt-2 inline-block hover:opacity-80 transition-opacity"
           >
             View all articles →
           </a>
-         
         </motion.div>
       </motion.div>
 
+      {/* Lottie background */}
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl pointer-events-none z-0"
+        style={{ filter: "grayscale(1) !important" }}
+      >
+        <DotLottieReact
+          src="https://lottie.host/f0bc37ac-2589-4af5-ade7-d0170c73bb17/jOPA0rTx5r.lottie"
+          loop
+          autoplay
+        />
+      </div>
+      <div
+        className="absolute top-0 left-0 rotate-20 w-full max-w-3xl pointer-events-none z-0"
+        style={{ filter: "grayscale(1) !important" }}
+      >
+        <DotLottieReact
+          src="https://lottie.host/f0bc37ac-2589-4af5-ade7-d0170c73bb17/jOPA0rTx5r.lottie"
+          loop
+          autoplay
+        />
+      </div>
       {/* Floating blobs */}
 
       <motion.img

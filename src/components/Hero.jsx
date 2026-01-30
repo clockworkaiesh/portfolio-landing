@@ -7,7 +7,7 @@ export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
-  const images = ["/2.png", "/3.png", "/5.png"];
+  const images = ["/2.webp", "/3.webp", "/5.webp"];
 
   // Check screen size
   useEffect(() => {
@@ -51,19 +51,18 @@ export default function Hero() {
       >
         {/* Image Container - Position based on screen size */}
         <div
-          className={`relative ${isMobile ? "w-full max-w-1/3 lg:max-w-[300px] order-2" : "order-1"} ${getContainerSize()} relative overflow-hidden`}
+          className={`relative ${isMobile ? "w-full max-w-1/3 lg:max-w-[300px] order-2" : "order-1"} ${getContainerSize()} relative `}
         >
           <img
             src="/blob.gif"
-            alt="blob"
-            className="absolute -bottom-3 -left-2 opacity-[0.1]"
+            alt=""
+            className="absolute -bottom-3 -left-2 opacity-[0.1] z-10"
           />
           <img
             src="/blob2.gif"
-            alt="blob"
-            className="absolute inset-3 opacity-[0.1]"
+            alt=""
+            className="absolute inset-3 opacity-[0.1] z-10"
           />
-
           {images.map((src, index) => (
             <img
               key={src}
@@ -90,16 +89,17 @@ export default function Hero() {
           </motion.h1>
 
           <motion.h2
-            className={`${isMobile ? "text-lg" : isTablet ? "text-xl" : "text-2xl lg:text-lg xl:text-2xl"} font-medium leading-[150%] text-neon-blue opacity-90`}
+            className={`${isMobile ? "text-md" : isTablet ? "text-xl" : "text-2xl lg:text-lg xl:text-2xl"} font-medium leading-[150%] text-neon-blue opacity-90`}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
-            Frontend Developer crafting fast, scalable, and human-centered web experiences.
+            Frontend Developer crafting fast, scalable, and human-centered web
+            experiences.
           </motion.h2>
 
           <motion.p
-            className={`${isMobile ? "text-base sm:text-lg" : isTablet ? "text-lg md:text-xl" : "text-xl lg:text-lg xl:text-2xl"} text-text-muted leading-relaxed`}
+            className={`${isMobile ? "text-md" : isTablet ? "text-lg md:text-xl" : "text-xl lg:text-lg xl:text-2xl"} text-text-muted leading-relaxed`}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
@@ -111,12 +111,10 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div
-        className={`-scale-[0.7] rotate-180 absolute ${isMobile ? "-bottom-16" : isTablet ? "bottom-36" : "bottom-24"} `}
+        className={`-scale-[0.8] rotate-180 absolute ${isMobile ? "bottom-8" : isTablet ? "bottom-36" : "bottom-10"} `}
       >
         <DotLottieReact
-                      src="https://lottie.host/23410713-3874-4301-9f7f-365585e0c013/45DnF5vmFR.lottie"
-
-
+          src="https://lottie.host/23410713-3874-4301-9f7f-365585e0c013/45DnF5vmFR.lottie"
           loop
           autoplay
         />

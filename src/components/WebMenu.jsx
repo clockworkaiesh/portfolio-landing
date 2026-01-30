@@ -29,7 +29,7 @@ export default function WebMenu({ onItemClick }) {
       panelHeight={68}
       baseItemSize={50}
       magnification={70}
-      className="bg-dark-default/20 backdrop-blur-md"
+      className="bg-dark-default/20 backdrop-blur-md scale-[0.9] lg:scale-100"
     />
   );
 }

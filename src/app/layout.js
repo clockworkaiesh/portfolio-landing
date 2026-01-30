@@ -10,7 +10,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "Ayesha Naveed",
+  title: "Ayesha Naveed | Frontend Engineer",
   description: "Ayesha Naveed's Portfolio Website",
 };
 

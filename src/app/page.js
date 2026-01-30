@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Work from "../components/Work";
@@ -14,6 +14,17 @@ import Image from "next/image";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!loaded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [loaded]);
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);

@@ -1,6 +1,23 @@
+"use client";
+import { motion } from "framer-motion";
 import { RiGithubLine, RiLinkedinLine, RiFileList3Line, RiMessageLine, RiMailUnreadLine } from "react-icons/ri";
 
-export default function SocialLinks({ className = "", showAnimation = true }) {
+const iconVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.3 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.12,
+      type: "spring",
+      stiffness: 260,
+      damping: 12,
+    },
+  }),
+};
+
+export default function SocialLinks({ className = "", showAnimation = true, stagger = false }) {
   const socialLinks = [
     {
       href: "https://linkedin.com/in/ayeshanaveed",
@@ -9,7 +26,7 @@ export default function SocialLinks({ className = "", showAnimation = true }) {
     },
     {
       href: "https://github.com/clockworkaiesh",
-      label: "GitHub Profile", 
+      label: "GitHub Profile",
       icon: RiGithubLine
     },
     {
@@ -30,13 +47,29 @@ export default function SocialLinks({ className = "", showAnimation = true }) {
   ];
 
   return (
-    <div 
-      className={`flex justify-center items-center space-x-6 ${showAnimation ? 'animate-fade-up' : ''} ${className}`}
-      style={showAnimation ? { animationDelay: '200ms' } : {}}
+    <div
+      className={`flex justify-center items-center space-x-6 ${!stagger && showAnimation ? 'animate-fade-up' : ''} ${className}`}
+      style={!stagger && showAnimation ? { animationDelay: '200ms' } : {}}
     >
       {socialLinks.map((link, index) => {
         const IconComponent = link.icon;
-        return (
+        return stagger ? (
+          <motion.a
+            key={index}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-md bg-dark-light border-text-muted border transition-all ease-in hover:bg-dark-default"
+            aria-label={link.label}
+            custom={index}
+            variants={iconVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-20%" }}
+          >
+            <IconComponent className="text-white text-xl group-hover:scale-110 transition-transform duration-300" />
+          </motion.a>
+        ) : (
           <a
             key={index}
             href={link.href}

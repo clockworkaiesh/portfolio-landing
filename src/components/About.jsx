@@ -9,6 +9,14 @@ const PixelBlast = dynamic(() => import("./PixelBlast"), { ssr: false });
 export default function About() {
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,10 +30,10 @@ export default function About() {
   return (
     <div
       ref={containerRef}
-      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-hidden"
+      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-hidden relative"
     >
-      {/* PixelBlast background */}
-      <div className="w-full h-full absolute inset-0 opacity-10 sm:opacity-15 md:opacity-20">
+      {/* PixelBlast background - desktop only */}
+      {isDesktop && <div className="w-full h-full absolute inset-5 opacity-20">
         <PixelBlast
           variant="circle"
           pixelSize={7}
@@ -38,7 +46,7 @@ export default function About() {
           edgeFade={0.25}
           transparent
         />
-      </div>
+      </div>}
 
       <div
         className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[70dvw] mx-auto transition-opacity duration-700"
