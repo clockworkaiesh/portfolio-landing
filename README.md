@@ -9,7 +9,7 @@ A high-performance, animated personal portfolio built with **Next.js 15**, **Rea
 ## Live Demo
 
 Deployed on **Netlify** as a fully static site.
-
+https://www.ayesha-naveed.space
 ---
 
 ## Tech Stack
@@ -122,7 +122,7 @@ src/components/
 
 ```bash
 # Clone the repo
-git clone https://github.com/<your-username>/portfolio-landing.git
+git clone https://github.com/clockworkaiesh/portfolio-landing/
 cd portfolio-landing
 
 # Install dependencies
