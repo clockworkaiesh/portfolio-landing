@@ -1,15 +1,11 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import SplitText from "../atoms/SplitText";
 import WorkCard from "../molecules/WorkCard";
 import portfolioData from "../../portfolioData.js";
 import useReducedMotion from "../../hooks/useReducedMotion";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const PixelBlast = dynamic(() => import("../atoms/PixelBlast"), { ssr: false });
 
@@ -29,34 +25,52 @@ export default function Work() {
   useEffect(() => {
     if (isMobile || prefersReducedMotion) return;
 
-    const panels = gsap.utils.toArray(".work-panel");
-    if (!panels.length) return;
+    // Lazy load GSAP only when needed (desktop + animations enabled)
+    let cleanup;
+    
+    const initGSAP = async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger")
+      ]);
+      
+      gsap.registerPlugin(ScrollTrigger);
 
-    const timeout = setTimeout(() => {
-      if (!containerRef.current || !triggerRef.current) return;
+      const panels = gsap.utils.toArray(".work-panel");
+      if (!panels.length) return;
 
-      const ctx = gsap.context(() => {
-        gsap.to(panels, {
-          xPercent: -100 * (panels.length - 1),
-          ease: "none",
-          scrollTrigger: {
-            trigger: triggerRef.current,
-            pin: true,
-            scrub: 0.5,
-            end: () => "+=" + (containerRef.current?.scrollWidth ?? 0 - window.innerWidth),
-            invalidateOnRefresh: true,
-          },
-        });
-      }, triggerRef);
+      const timeout = setTimeout(() => {
+        if (!containerRef.current || !triggerRef.current) return;
 
-      triggerRef.current._gsapCtx = ctx;
-    }, 100);
+        const ctx = gsap.context(() => {
+          gsap.to(panels, {
+            xPercent: -100 * (panels.length - 1),
+            ease: "none",
+            scrollTrigger: {
+              trigger: triggerRef.current,
+              pin: true,
+              scrub: 0.5,
+              end: () => "+=" + (containerRef.current?.scrollWidth ?? 0 - window.innerWidth),
+              invalidateOnRefresh: true,
+            },
+          });
+        }, triggerRef);
+
+        triggerRef.current._gsapCtx = ctx;
+      }, 100);
+
+      cleanup = () => {
+        clearTimeout(timeout);
+        if (triggerRef.current?._gsapCtx) {
+          triggerRef.current._gsapCtx.revert();
+        }
+      };
+    };
+
+    initGSAP();
 
     return () => {
-      clearTimeout(timeout);
-      if (triggerRef.current?._gsapCtx) {
-        triggerRef.current._gsapCtx.revert();
-      }
+      if (cleanup) cleanup();
     };
   }, [isMobile, prefersReducedMotion]);
 

@@ -1,8 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import dynamic from "next/dynamic";
 import useReducedMotion from "../../hooks/useReducedMotion";
+import BlobBackground from "./BlobBackground";
+
+const DotLottieReact = dynamic(
+  () =>
+    import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -43,8 +53,8 @@ export default function Hero() {
   // Get container size based on screen
   const getContainerSize = () => {
     if (isMobile) return "w-full h-[280px] sm:h-[320px]";
-    if (isTablet) return "w-full h-[350px] md:h-[380px]";
-    return "w-[450px] h-[450px]";
+    if (isTablet) return "w-full h-[300px] md:h-[380px]";
+    return "w-[370px] h-[370px] xl:w-[450px] xl:h-[450px]";
   };
 
   return (
@@ -56,18 +66,8 @@ export default function Hero() {
         <div
           className={`relative ${isMobile ? "w-full max-w-1/3 lg:max-w-[300px] order-2" : "order-1"} ${getContainerSize()} relative `}
         >
-          <img
-            src="/blob.gif"
-            alt=""
-            className="absolute -bottom-3 -left-2 opacity-[0.1] z-10"
-            aria-hidden="true"
-          />
-          <img
-            src="/blob2.gif"
-            alt=""
-            className="absolute inset-3 opacity-[0.1] z-10"
-            aria-hidden="true"
-          />
+          <BlobBackground />
+          {/* below is a series of my own avatar character image */}
           {images.map((src, index) => (
             <img
               key={src}
@@ -117,7 +117,7 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div
-        className={`scale-[0.52] md:-scale-[0.6] lg:scale-[0.6] hidden md:block md:rotate-180 lg:rotate-0 absolute ${isMobile ? "-bottom-24" : isTablet ? "-bottom-[4%]" : "bottom-0"} `}
+        className="md:block hidden md:max-w-[180px] lg:max-w-[200px] xl:max-w-[220px]"
         aria-hidden="true"
         role="presentation"
       >

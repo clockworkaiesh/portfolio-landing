@@ -82,10 +82,21 @@ module.exports = {
   				to: {
   					transform: 'translateX(-50%)'
   				}
-  			}
+  			},
+			'blob-spin': {
+				'0%': { transform: 'rotate(0deg)' },
+				'100%': { transform: 'rotate(360deg)' }
+			},
+			'blob-float': {
+				'0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+				'33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+				'66%': { transform: 'translate(-20px, 20px) scale(0.9)' }
+			}
   		},
   		animation: {
-  			marquee: 'marquee 15s linear infinite'
+  			marquee: 'marquee 15s linear infinite',
+			'blob-spin': 'blob-spin 20s linear infinite',
+			'blob-float': 'blob-float 10s ease-in-out infinite'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

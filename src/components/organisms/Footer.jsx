@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import {
   motion,
   useInView,
@@ -8,8 +8,17 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import dynamic from "next/dynamic";
 import SplitText from "../atoms/SplitText";
+
+const DotLottieReact = dynamic(
+  () =>
+    import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 import SocialLinks from "../molecules/SocialLinks";
 import ArticleCarousel from "../molecules/ArticleCarousel";
 import useReducedMotion from "../../hooks/useReducedMotion";
@@ -19,7 +28,7 @@ export default function Footer() {
   const prefersReducedMotion = useReducedMotion();
   const isInView = useInView(footerRef, {
     once: true,
-    margin: "-20%",
+    margin: "-10%", 
   });
 
   const { scrollY } = useScroll();
@@ -30,14 +39,44 @@ export default function Footer() {
     stiffness: 400,
   });
 
-  const yOffset = useTransform(smoothVelocity, [-2000, 0, 2000], [-20, 0, 20]);
+  const yOffset = useTransform(smoothVelocity, [-2000, 0, 2000], [-10, 0, 10]);
+
+  // Adjust main content margin to match footer height
+  useEffect(() => {
+    const updateMargin = () => {
+      if (footerRef.current) {
+        const footerHeight = footerRef.current.offsetHeight;
+        const mainContent = document.getElementById("main-content");
+        if (mainContent) {
+          mainContent.style.marginBottom = `${footerHeight}px`;
+        }
+      }
+    };
+
+    // Initial update
+    const timeoutId = setTimeout(updateMargin, 100); // Small delay to ensure render
+    
+    // Observer for resize
+    const resizeObserver = new ResizeObserver(updateMargin);
+    if (footerRef.current) {
+        resizeObserver.observe(footerRef.current);
+    }
+
+    window.addEventListener("resize", updateMargin);
+    
+    return () => {
+        clearTimeout(timeoutId);
+        window.removeEventListener("resize", updateMargin);
+        resizeObserver.disconnect();
+    };
+  }, []);
 
   return (
     <motion.footer
       id="contact"
       ref={footerRef}
       style={prefersReducedMotion ? {} : { y: yOffset }}
-      className="sticky bottom-0 h-screen w-full flex items-center justify-center z-0 overflow-hidden"
+      className="fixed bottom-0 left-0 h-screen w-full flex items-center justify-center -z-10 overflow-hidden bg-default-softer"
       aria-label="Contact and social links"
     >
       <motion.div
@@ -46,6 +85,7 @@ export default function Footer() {
         transition={{ duration: prefersReducedMotion ? 0 : 0.8 }}
         className=" max-w-5xl w-full px-6 text-center relative z-50"
       >
+
         <SplitText
           text="Let's Talk"
           tag="h2"

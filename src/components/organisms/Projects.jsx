@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import SplitText from "../atoms/SplitText";
 import ProjectCard from "../molecules/ProjectCard";
 import useReducedMotion from "../../hooks/useReducedMotion";
+import DoodleArrow from "../atoms/DoodleArrow";
 
 export default function Projects() {
   const containerRef = useRef(null);
@@ -76,8 +77,18 @@ export default function Projects() {
     <section
       ref={containerRef}
       aria-labelledby="projects-heading"
-      className="text-center w-screen min-h-screen flex flex-col justify-center items-center vertical-spacing overflow-hidden"
+      className="text-center w-screen min-h-screen flex flex-col justify-center items-center vertical-spacing overflow-visible relative"
     >
+       {/* Doodle Arrow - Left */}
+       <div className="absolute top-1/3 xl:-left-5 2xl:left-10 hidden 2xl:block w-32 h-32">
+         <DoodleArrow variant="curve-right" className="rotate-12" />
+       </div>
+
+       {/* Doodle Arrow - Right */}
+       <div className="absolute top-2/3 right-10 hidden xl:block w-32 h-32">
+         <DoodleArrow variant="curve-right" className="rotate-[220deg]" />
+       </div>
+
       <div
         className="w-full max-w-6xl mx-auto transition-opacity duration-700"
         style={{ opacity: isVisible ? 1 : 0 }}

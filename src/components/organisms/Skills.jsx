@@ -5,6 +5,8 @@ import SplitText from "../atoms/SplitText";
 import SkillCard from "../molecules/SkillCard";
 import useReducedMotion from "../../hooks/useReducedMotion";
 
+import DoodleArrow from "../atoms/DoodleArrow";
+
 export default function Skills() {
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -136,8 +138,18 @@ export default function Skills() {
     <section
       ref={containerRef}
       aria-labelledby="skills-heading"
-      className="w-screen min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 vertical-spacing"
+      className="w-screen min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 vertical-spacing relative overflow-visible"
     >
+       {/* Doodle Arrow - Right */}
+       <div className="absolute top-1/4 right-10 hidden xl:block w-40 h-40">
+        <DoodleArrow variant="loop-left" />
+      </div>
+
+       {/* Doodle Arrow - Left */}
+       <div className="absolute xl:bottom-[2%] 2xl:bottom-1/4 left-10 rotate-[300deg] hidden xl:block w-40 h-40">
+        <DoodleArrow variant="loop-left" className="scale-x-[-1]" />
+      </div>
+
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-8 sm:mb-10 lg:mb-12 px-4">
           <SplitText

@@ -4,6 +4,7 @@ import SplitText from "../atoms/SplitText";
 import HighlightedSplitText from "../atoms/HighlightedSplitText";
 import dynamic from "next/dynamic";
 import useReducedMotion from "../../hooks/useReducedMotion";
+import DoodleArrow from "../atoms/DoodleArrow";
 
 const PixelBlast = dynamic(() => import("../atoms/PixelBlast"), { ssr: false });
 
@@ -33,7 +34,7 @@ export default function About() {
     <section
       ref={containerRef}
       aria-labelledby="about-heading"
-      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-hidden relative mt-28 md:mt-0"
+      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-visible relative mt-16 md:mt-0"
     >
       {/* PixelBlast background - desktop only */}
       {isDesktop && !prefersReducedMotion && <div className="w-full h-full absolute inset-5 opacity-20" aria-hidden="true">
@@ -50,6 +51,11 @@ export default function About() {
           transparent
         />
       </div>}
+
+      {/* Doodle Arrow - Bottom Left */}
+      <div className="absolute bottom-10 left-10 md:left-20 hidden lg:block w-40 h-40 z-10">
+        <DoodleArrow variant="curve-right" className="rotate-[-45deg]" />
+      </div>
 
       <div
         className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[90dvw] mx-auto transition-opacity duration-700"
