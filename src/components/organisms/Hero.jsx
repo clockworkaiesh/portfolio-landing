@@ -18,7 +18,7 @@ export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
-  const images = ["/2.webp", "/3.webp", "/5.webp"];
+  const images = ["/2.webp", "/3.webp", "/4.webp"];
   const prefersReducedMotion = useReducedMotion();
 
   // Check screen size
