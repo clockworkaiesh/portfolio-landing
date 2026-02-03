@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import SplitText from "../atoms/SplitText";
 import ProjectCard from "../molecules/ProjectCard";
@@ -8,7 +8,6 @@ import DoodleArrow from "../atoms/DoodleArrow";
 
 export default function Projects() {
   const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const projects = [
@@ -64,14 +63,7 @@ export default function Projects() {
     },
   ];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
+
 
   return (
     <section
@@ -89,10 +81,7 @@ export default function Projects() {
          <DoodleArrow variant="curve-right" className="rotate-[220deg]" />
        </div>
 
-      <div
-        className="w-full max-w-6xl mx-auto transition-opacity duration-700"
-        style={{ opacity: isVisible ? 1 : 0 }}
-      >
+      <div className="w-full max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <SplitText
             text="Selected Projects"
@@ -111,9 +100,14 @@ export default function Projects() {
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : index * 0.1 }}
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                duration: 0.5, 
+                delay: prefersReducedMotion ? 0 : index * 0.1,
+                ease: "easeOut"
+              }}
             >
               <ProjectCard project={project} />
             </motion.div>

@@ -118,10 +118,16 @@ html {
 
 /* Cursor glow */
 .cursor-glow {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 30;
+  background: radial-gradient(300px at var(--mouse-x) var(--mouse-y), rgba(79, 70, 229, 0.15), transparent);
+  will-change: background;
+  transform: translateZ(0);
+  transition: opacity 0.3s ease;
 }
 
 .cursor-glow.hidden {
@@ -151,12 +157,28 @@ textarea {
 .parallax-element {
   will-change: transform;
   backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Skills */
 .skill-item {
   will-change: transform, opacity;
   backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Performance optimizations */
+.section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* Blob animations - GPU accelerated */
+.animate-blob-float,
+.animate-blob-float-reverse,
+.animate-blob-spin {
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .source-code-img::before {
@@ -235,15 +257,19 @@ textarea {
 }
 
 @keyframes blobFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(10px, -15px) scale(1.05); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(10px, -15px, 0) scale(1.05); }
 }
 @keyframes blobFloatReverse {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-10px, 10px) scale(1.08); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-10px, 10px, 0) scale(1.08); }
 }
-.animate-blob-float { animation: blobFloat 8s ease-in-out infinite; }
-.animate-blob-float-reverse { animation: blobFloatReverse 9s ease-in-out infinite; }
+.animate-blob-float { 
+  animation: blobFloat 8s ease-in-out infinite;
+}
+.animate-blob-float-reverse { 
+  animation: blobFloatReverse 9s ease-in-out infinite;
+}
 
 /* StarBorder keyframes */
 @keyframes starMovementBottom {

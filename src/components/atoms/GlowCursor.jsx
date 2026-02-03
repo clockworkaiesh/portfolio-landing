@@ -3,27 +3,48 @@ import { useRef, useEffect } from "react";
 
 export default function GlowCursor() {
   const ref = useRef(null);
+  const rafRef = useRef(null);
+  const posRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || window.matchMedia('(pointer: coarse)').matches) return;
 
-    const onMove = (e) => {
-      el.style.background = `radial-gradient(300px at ${e.clientX}px ${e.clientY}px, rgba(79, 70, 229, 0.15), transparent)`;
-      el.style.opacity = "1";
+    let isVisible = true;
+
+    const updatePosition = () => {
+      if (el) {
+        el.style.setProperty('--mouse-x', `${posRef.current.x}px`);
+        el.style.setProperty('--mouse-y', `${posRef.current.y}px`);
+      }
     };
 
-    const onLeave = () => { el.style.opacity = "0"; };
-    const onEnter = () => { el.style.opacity = "1"; };
+    const onMove = (e) => {
+      posRef.current = { x: e.clientX, y: e.clientY };
+      if (!rafRef.current) {
+        rafRef.current = requestAnimationFrame(() => {
+          updatePosition();
+          rafRef.current = null;
+        });
+      }
+      if (!isVisible) {
+        el.style.opacity = "1";
+        isVisible = true;
+      }
+    };
+
+    const onLeave = () => {
+      el.style.opacity = "0";
+      isVisible = false;
+    };
 
     document.addEventListener("mousemove", onMove, { passive: true });
-    document.addEventListener("mouseleave", onLeave);
-    document.addEventListener("mouseenter", onEnter);
+    document.addEventListener("mouseleave", onLeave, { passive: true });
 
     return () => {
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("mouseenter", onEnter);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 

@@ -10,7 +10,6 @@ const PixelBlast = dynamic(() => import("../atoms/PixelBlast"), { ssr: false });
 
 export default function About() {
   const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
@@ -21,14 +20,7 @@ export default function About() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
-      { threshold: 0.2 }
-    );
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
+
 
   return (
     <section
@@ -57,10 +49,7 @@ export default function About() {
         <DoodleArrow variant="curve-right" className="rotate-[-45deg]" />
       </div>
 
-      <div
-        className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[90dvw] mx-auto transition-opacity duration-700"
-        style={{ opacity: isVisible ? 1 : 0 }}
-      >
+      <div className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[90dvw] mx-auto">
         <SplitText
           text="Who am I?"
           tag="h2"

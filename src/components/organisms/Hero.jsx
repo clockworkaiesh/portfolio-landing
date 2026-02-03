@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import useReducedMotion from "../../hooks/useReducedMotion";
 import BlobBackground from "./BlobBackground";
@@ -39,7 +40,7 @@ export default function Hero() {
     if (prefersReducedMotion) return;
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 600);
+    }, 2000);
     return () => clearInterval(interval);
   }, [images.length, prefersReducedMotion]);
 
@@ -69,15 +70,23 @@ export default function Hero() {
           <BlobBackground />
           {/* below is a series of my own avatar character image */}
           {images.map((src, index) => (
-            <img
+            <div 
               key={src}
-              src={src}
-              className={`absolute z-50 inset-0 ${getImageSize()} object-contain transition-opacity duration-0 mx-auto ${
-                index === currentImageIndex ? "opacity-100" : "opacity-0"
+              className={`absolute inset-0 ${getImageSize()} mx-auto transition-opacity duration-0 ${
+                index === currentImageIndex ? "opacity-100 z-50" : "opacity-0 z-0"
               }`}
-              alt={index === currentImageIndex ? "Ayesha Naveed" : ""}
+              style={{ willChange: 'opacity', position: 'absolute' }}
               aria-hidden={index !== currentImageIndex}
-            />
+            >
+              <Image
+                src={src}
+                alt={index === currentImageIndex ? "Ayesha Naveed" : ""}
+                fill
+                sizes="(max-width: 768px) 320px, (max-width: 1024px) 350px, 450px"
+                priority
+                className="object-contain"
+              />
+            </div>
           ))}
         </div>
 

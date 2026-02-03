@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import dynamic from "next/dynamic";
 import SplitText from "../atoms/SplitText";
+import Image from "next/image";
 
 const DotLottieReact = dynamic(
   () =>
@@ -41,47 +42,23 @@ export default function Footer() {
 
   const yOffset = useTransform(smoothVelocity, [-2000, 0, 2000], [-10, 0, 10]);
 
-  // Adjust main content margin to match footer height
-  useEffect(() => {
-    const updateMargin = () => {
-      if (footerRef.current) {
-        const footerHeight = footerRef.current.offsetHeight;
-        const mainContent = document.getElementById("main-content");
-        if (mainContent) {
-          mainContent.style.marginBottom = `${footerHeight}px`;
-        }
-      }
-    };
-
-    // Initial update
-    const timeoutId = setTimeout(updateMargin, 100); // Small delay to ensure render
-    
-    // Observer for resize
-    const resizeObserver = new ResizeObserver(updateMargin);
-    if (footerRef.current) {
-        resizeObserver.observe(footerRef.current);
-    }
-
-    window.addEventListener("resize", updateMargin);
-    
-    return () => {
-        clearTimeout(timeoutId);
-        window.removeEventListener("resize", updateMargin);
-        resizeObserver.disconnect();
-    };
-  }, []);
+  // Removed manual margin adjustment that caused forced reflows
+  // Instead, the parent layout in page.js should handle the spacing/overlap via z-index and CSS Grid or Flexbox.
+  // We will simply ensure the main content has enough bottom padding/margin via CSS if needed,
+  // or rely on the fixed position footer revealing itself.
 
   return (
     <motion.footer
       id="contact"
       ref={footerRef}
       style={prefersReducedMotion ? {} : { y: yOffset }}
-      className="fixed bottom-0 left-0 h-screen w-full flex items-center justify-center -z-10 overflow-hidden bg-default-softer"
+      className="fixed bottom-0 left-0 h-screen w-full flex items-center justify-center -z-10 overflow-hidden"
       aria-label="Contact and social links"
     >
       <motion.div
         initial={prefersReducedMotion ? {} : { opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        whileInView={isInView ? { opacity: 1, y: 0 } : {}}
+        viewport={{ once: true }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.8 }}
         className=" max-w-5xl w-full px-6 text-center relative z-50"
       >
@@ -148,53 +125,71 @@ export default function Footer() {
       </div>
 
       {/* Floating blobs */}
-      <motion.img
+      <motion.div
         className="absolute bottom-14 left-10 size-[80px] hidden md:block"
-        src="/shapes/purple-blob1.webp"
-        alt=""
-        loading="lazy"
-        aria-hidden="true"
         initial={{ opacity: 0 }}
-        animate={isInView && !prefersReducedMotion ? { opacity: 0.6, y: [0, -20, 0] } : isInView ? { opacity: 0.6 } : {}}
+        whileInView={!prefersReducedMotion ? { opacity: 0.6, y: [0, -20, 0] } : { opacity: 0.6 }}
+        viewport={{ once: true }}
         transition={{
           duration: 7,
           repeat: prefersReducedMotion ? 0 : Infinity,
           repeatType: "mirror",
           ease: "easeInOut",
         }}
-      />
-
-      <motion.img
-        className="absolute bottom-32 -right-10"
-        src="/shapes/purple-blob2.webp"
-        alt=""
-        loading="lazy"
         aria-hidden="true"
+      >
+        <Image
+          src="/shapes/purple-blob1.webp"
+          alt=""
+          fill
+          sizes="80px"
+          className="object-contain"
+        />
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-32 -right-3 size-[80px]"
         initial={{ opacity: 0 }}
-        animate={isInView && !prefersReducedMotion ? { opacity: 0.5, y: [0, 25, 0] } : isInView ? { opacity: 0.5 } : {}}
+        whileInView={!prefersReducedMotion ? { opacity: 0.5, y: [0, 25, 0] } : { opacity: 0.5 }}
+        viewport={{ once: true }}
         transition={{
           duration: 9,
           repeat: prefersReducedMotion ? 0 : Infinity,
           repeatType: "mirror",
           ease: "easeInOut",
         }}
-      />
-
-      <motion.img
-        className="absolute top-32 left-1/2 size-[80px]"
-        src="/shapes/dots-big.webp"
-        alt=""
-        loading="lazy"
         aria-hidden="true"
+      >
+        <Image
+          src="/shapes/purple-blob2.webp"
+          alt=""
+          fill
+          sizes="80px"
+          className="object-contain"
+        />
+      </motion.div>
+
+      <motion.div
+        className="absolute top-32 left-1/2 size-[80px]"
         initial={{ opacity: 0 }}
-        animate={isInView && !prefersReducedMotion ? { opacity: 0.4, y: [0, -15, 0] } : isInView ? { opacity: 0.4 } : {}}
+        whileInView={!prefersReducedMotion ? { opacity: 0.4, y: [0, -15, 0] } : { opacity: 0.4 }}
+        viewport={{ once: true }}
         transition={{
           duration: 8,
           repeat: prefersReducedMotion ? 0 : Infinity,
           repeatType: "mirror",
           ease: "easeInOut",
         }}
-      />
+        aria-hidden="true"
+      >
+        <Image
+          src="/shapes/dots-big.webp"
+          alt=""
+          fill
+          sizes="80px"
+          className="object-contain"
+        />
+      </motion.div>
     </motion.footer>
   );
 }

@@ -1,14 +1,22 @@
 "use client";
 import { ExternalLink, Github } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project, className = "" }) {
   return (
-    <article className="bg-dark-light border border-dark-softer rounded-2xl overflow-hidden transition-all duration-300 hover:border-neon-blue/30 hover:shadow-[0_0_30px_rgba(0,240,255,0.1)] h-full w-full flex flex-col">
+    <motion.article 
+      className={`bg-dark-light border border-dark-softer rounded-2xl overflow-hidden h-full w-full flex flex-col group ${className}`}
+      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Thumbnail */}
       <div className="relative h-40 sm:h-48 overflow-hidden bg-gradient-to-br from-dark-softer to-dark-light">
-        <img
+        <Image
           src={project.banner}
           alt={project.title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
@@ -75,6 +83,6 @@ export default function ProjectCard({ project }) {
           )}
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

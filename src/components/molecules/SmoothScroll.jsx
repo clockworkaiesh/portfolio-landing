@@ -10,25 +10,30 @@ export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    // Force scroll to top on reload
-    if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
-      }
+    if (typeof window === "undefined") return;
+
+    window.scrollTo(0, 0);
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
 
+    // Disable smooth scroll on touch devices for better native performance
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) return;
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.1,
       smoothWheel: true,
+      wheelMultiplier: 1,
       touchMultiplier: 2,
+      infinite: false,
     });
 
     lenisRef.current = lenis;
     lenis.scrollTo(0, { immediate: true });
 
-    // Sync Lenis with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
     gsap.ticker.add((time) => {

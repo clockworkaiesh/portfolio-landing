@@ -29,7 +29,6 @@ const SplitText = ({
 
   const splitText = (text, type) => {
     if (!mounted) {
-      // Return simple text during SSR to prevent hydration mismatch
       return text;
     }
 
@@ -37,11 +36,11 @@ const SplitText = ({
       return text.split('').map((char, index) => (
         <motion.span
           key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           transition={{
-            duration,
-            delay: index * stagger,
+            duration: duration * 0.6,
+            delay: index * stagger * 0.5,
             ease: "easeOut"
           }}
           style={{ display: 'inline-block' }}
@@ -53,11 +52,11 @@ const SplitText = ({
       return text.split(' ').map((word, index) => (
         <motion.span
           key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           transition={{
-            duration,
-            delay: index * stagger,
+            duration: duration * 0.6,
+            delay: index * stagger * 0.5,
             ease: "easeOut"
           }}
           style={{ display: 'inline-block', marginRight: '0.25em' }}
@@ -66,15 +65,14 @@ const SplitText = ({
         </motion.span>
       ));
     } else if (type === 'lines') {
-      // For lines, we need to handle block elements properly
       return text.split('\n').map((line, index) => (
         <motion.span
           key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           transition={{
-            duration,
-            delay: index * stagger,
+            duration: duration * 0.6,
+            delay: index * stagger * 0.5,
             ease: "easeOut"
           }}
           style={{ display: 'block' }}

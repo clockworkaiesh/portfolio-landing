@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import SplitText from "../atoms/SplitText";
 import WorkCard from "../molecules/WorkCard";
@@ -146,13 +147,18 @@ export default function Work() {
                 style={{ width: `${100 / portfolioData.length}%` }}
               >
                 <div className="layout-wrapper">
-                  <article className="rounded-2xl overflow-hidden flex flex-row backdrop-blur-md">
+                  <motion.article 
+                    className="rounded-2xl overflow-hidden flex flex-row backdrop-blur-md"
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="relative rounded-2xl h-[400px] w-1/2 overflow-hidden bg-gradient-to-br from-dark-softer to-dark-light">
-                      <img
+                      <Image
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-contain rounded-2xl"
-                        loading="lazy"
+                        fill
+                        sizes="(max-width: 1280px) 50vw, 600px"
+                        className="object-contain rounded-2xl"
                       />
                     </div>
                     <div className="p-6 sm:p-8 lg:w-1/2 text-left flex flex-col justify-center">
@@ -189,7 +195,7 @@ export default function Work() {
                         </div>
                       )}
                     </div>
-                  </article>
+                  </motion.article>
                 </div>
               </div>
             ))}

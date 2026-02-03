@@ -1,14 +1,21 @@
 "use client";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function WorkCard({ item }) {
   return (
-    <article className="bg-dark-light border border-dark-softer rounded-2xl overflow-hidden transition-all duration-300 hover:border-neon-blue/30 hover:shadow-[0_0_30px_rgba(0,240,255,0.1)] flex flex-col">
+    <motion.article 
+      className="bg-dark-light border border-dark-softer rounded-2xl overflow-hidden h-full flex flex-col"
+      whileHover={{ scale: 1.02, borderColor: "rgba(0, 240, 255, 0.3)", boxShadow: "0 0 30px rgba(0, 240, 255, 0.1)" }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="relative h-48 sm:h-56 overflow-hidden bg-gradient-to-br from-dark-softer to-dark-light">
-        <img
+        <Image
           src={item.image}
           alt={item.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="w-full h-full object-contain"
-          loading="lazy"
         />
       </div>
       <div className="p-5 sm:p-6 flex-1 flex flex-col">
@@ -19,6 +26,6 @@ export default function WorkCard({ item }) {
           {item.description}
         </p>
       </div>
-    </article>
+    </motion.article>
   );
 }

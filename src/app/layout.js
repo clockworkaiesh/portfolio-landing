@@ -11,6 +11,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://www.ayesha-naveed.space"),
   title: "Ayesha Naveed | Frontend Engineer",
   description: "Frontend Engineer specializing in React, Next.js, and modern web technologies. Explore my portfolio of creative and performant web applications.",
   keywords: ["Frontend Engineer", "React Developer", "Next.js", "Web Development", "Portfolio", "Ayesha Naveed"],
@@ -21,7 +22,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.ayeshanaveed.com",
+    url: "https://www.ayesha-naveed.space",
     title: "Ayesha Naveed | Frontend Engineer",
     description: "Frontend Engineer specializing in React, Next.js, and modern web technologies. Explore my portfolio of creative and performant web applications.",
     siteName: "Ayesha Naveed Portfolio",

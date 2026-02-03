@@ -91,9 +91,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer */}
-       <div id="contact">
-         <Footer />
+        {/* Footer Reveal Spacer */}
+        {/* This transparent div creates space for the fixed footer to be revealed behind the main content */}
+        {/* <div 
+          className="bg-dark-light relative w-full h-[100dvh] -z-20 pointer-events-none" 
+          aria-hidden="true" 
+        /> */}
+        
+        {/* Fixed Footer */}
+        <div id="contact">
+          <Footer />
         </div>
       </main>
 
