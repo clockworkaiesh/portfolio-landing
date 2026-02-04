@@ -1,5 +1,6 @@
 "use client";
-import { ExternalLink, Github } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -65,7 +66,7 @@ export default function ProjectCard({ project, className = "" }) {
               className="inline-flex items-center gap-1.5 text-sm font-medium text-neon-blue hover:text-neon-purple transition-colors"
               aria-label={`View live site for ${project.title} (opens in new tab)`}
             >
-              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+              <FiExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
               <span className="text-xs sm:text-sm">Live Site</span>
             </a>
           )}
@@ -77,7 +78,7 @@ export default function ProjectCard({ project, className = "" }) {
               className="inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-text-base transition-colors"
               aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
             >
-              <Github className="w-3.5 h-3.5" aria-hidden="true" />
+              <FaGithub className="w-3.5 h-3.5" aria-hidden="true" />
               <span className="text-xs sm:text-sm">Code</span>
             </a>
           )}

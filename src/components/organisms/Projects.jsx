@@ -1,7 +1,6 @@
 "use client";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import SplitText from "../atoms/SplitText";
 import ProjectCard from "../molecules/ProjectCard";
 import useReducedMotion from "../../hooks/useReducedMotion";
 import DoodleArrow from "../atoms/DoodleArrow";
@@ -63,38 +62,37 @@ export default function Projects() {
     },
   ];
 
-
-
   return (
     <section
       ref={containerRef}
       aria-labelledby="projects-heading"
-      className="text-center w-screen min-h-screen flex flex-col justify-center items-center vertical-spacing overflow-visible relative"
+      className="text-center w-screen min-h-screen flex flex-col justify-center items-center pb-[40px] md:pb-[80px] lg:pb-[100px] 2xl:pb-[160px] overflow-visible relative"
     >
        {/* Doodle Arrow - Left */}
        <div className="absolute top-1/3 xl:-left-5 2xl:left-10 hidden 2xl:block w-32 h-32">
-         <DoodleArrow variant="curve-right" className="rotate-12" />
+         <DoodleArrow variant="curve-right" className="rotate-12" delay={0.5} />
        </div>
 
        {/* Doodle Arrow - Right */}
        <div className="absolute top-2/3 right-10 hidden xl:block w-32 h-32">
-         <DoodleArrow variant="curve-right" className="rotate-[220deg]" />
+         <DoodleArrow variant="curve-right" className="rotate-[220deg]"  delay={0.5}/>
        </div>
 
       <div className="w-full max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <SplitText
-            text="Selected Projects"
-            tag="h2"
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             id="projects-heading"
             className="section-heading"
-            stagger={0.05}
-            duration={0.7}
-            splitType="chars"
-            threshold={0.3}
-            rootMargin="0px"
-          />
+          >
+            Selected Projects
+          </motion.h2>
         </div>
+
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (

@@ -1,7 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import SplitText from "../atoms/SplitText";
-import HighlightedSplitText from "../atoms/HighlightedSplitText";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import useReducedMotion from "../../hooks/useReducedMotion";
 import DoodleArrow from "../atoms/DoodleArrow";
@@ -26,7 +25,7 @@ export default function About() {
     <section
       ref={containerRef}
       aria-labelledby="about-heading"
-      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-visible relative mt-16 md:mt-0"
+      className="text-center w-screen vertical-spacing flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 overflow-visible relative"
     >
       {/* PixelBlast background - desktop only */}
       {isDesktop && !prefersReducedMotion && <div className="w-full h-full absolute inset-5 opacity-20" aria-hidden="true">
@@ -45,47 +44,34 @@ export default function About() {
       </div>}
 
       {/* Doodle Arrow - Bottom Left */}
-      <div className="absolute bottom-10 left-10 md:left-20 hidden lg:block w-40 h-40 z-10">
+      <div className="absolute bottom-10 left-10 md:left-20 lg:-left-10 xl:left-20 hidden lg:block w-40 h-40 z-10">
         <DoodleArrow variant="curve-right" className="rotate-[-45deg]" />
       </div>
 
       <div className="w-[90dvw] max-w-[800px] sm:w-[80dvw] md:w-[90dvw] mx-auto">
-        <SplitText
-          text="Who am I?"
-          tag="h2"
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           id="about-heading"
           className="section-heading"
-          stagger={0.05}
-          duration={0.7}
-          splitType="chars"
-          threshold={0.3}
-          rootMargin="0px"
-        />
-        <HighlightedSplitText
-          text="I'm a Frontend Developer with 5+ years of experience turning ideas into digital products that are both functional and visually engaging. From sleek landing pages to complex dashboards, I focus on building interfaces that are responsive, intuitive, and performance-driven. My toolkit includes React, Next, Redux Toolkit, and Tailwind, along with Framer Motion for animations, D3 for data visualizations, and Web3 integrations that bring interactivity and modern functionality to the web."
-          tag="p"
+        >
+          Who am I?
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="paragraph"
-          stagger={0.02}
-          duration={0.6}
-          splitType="words"
-          threshold={0.3}
-          rootMargin="0px"
-          highlights={[
-            { word: 'Frontend Developer', color: 'neon-blue' },
-            { word: '6+ years', color: 'neon-blue' },
-            { word: 'React', color: 'neon-blue' },
-            { word: 'Next', color: 'neon-blue' },
-            { word: 'Redux Toolkit', color: 'neon-blue' },
-            { word: 'Tailwind', color: 'neon-blue' },
-            { word: 'Framer Motion', color: 'neon-blue' },
-            { word: 'D3', color: 'neon-blue' },
-            { word: 'Web3', color: 'neon-blue' },
-            { word: 'responsive', color: 'neon-blue' },
-            { word: 'intuitive', color: 'neon-blue' },
-            { word: 'performance-driven', color: 'neon-blue' }
-          ]}
-        />
+        >
+          I'm a <span className="text-neon-blue font-semibold">Frontend Developer</span> with <span className="text-neon-blue font-semibold">6+ years</span> of experience turning ideas into digital products that are both functional and visually engaging. From sleek landing pages to complex dashboards, I focus on building interfaces that are <span className="text-neon-blue font-semibold">responsive</span>, <span className="text-neon-blue font-semibold">intuitive</span>, and <span className="text-neon-blue font-semibold">performance-driven</span>. My toolkit includes <span className="text-neon-blue font-semibold">React</span>, <span className="text-neon-blue font-semibold">Next</span>, <span className="text-neon-blue font-semibold">Redux Toolkit</span>, and <span className="text-neon-blue font-semibold">Tailwind</span>, along with <span className="text-neon-blue font-semibold">Framer Motion</span> for animations, <span className="text-neon-blue font-semibold">D3</span> for data visualizations, and <span className="text-neon-blue font-semibold">Web3</span> integrations that bring interactivity and modern functionality to the web.
+        </motion.p>
       </div>
+
     </section>
   );
 }

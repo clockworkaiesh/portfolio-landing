@@ -1,6 +1,6 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "../components/molecules/SmoothScroll";
+import ScrollManager from "../components/molecules/ScrollManager";
 import Footer from "../components/organisms/Footer";
 
 const montserrat = Montserrat({
@@ -63,13 +63,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${montserrat.variable} antialiased`}>
-        <SmoothScroll>
+        {/* Fixed background for performance */}
+        <div
+          className="fixed inset-0 -z-50 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at 20% 30%, #1a2233 0%, #0a0f1c 40%, #0a0f1c 100%),
+            linear-gradient(135deg, #0a0f1c 0%, #1a2233 25%, #0a0f1c 50%, #2a3245 75%, #0a0f1c 100%)`
+          }}
+        />
+        <ScrollManager>
           {/* Main content wrapper with background to cover fixed footer */}
           <div className="relative z-10 bg-[#0a0f1c] mb-[100vh]" id="main-content">
             {children}
           </div>
           <Footer />
-        </SmoothScroll>
+        </ScrollManager>
       </body>
     </html>
   );

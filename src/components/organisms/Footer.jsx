@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import {
   motion,
   useInView,
@@ -8,18 +8,9 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import dynamic from "next/dynamic";
-import SplitText from "../atoms/SplitText";
 import Image from "next/image";
 
-const DotLottieReact = dynamic(
-  () =>
-    import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+
 import SocialLinks from "../molecules/SocialLinks";
 import ArticleCarousel from "../molecules/ArticleCarousel";
 import useReducedMotion from "../../hooks/useReducedMotion";
@@ -63,33 +54,37 @@ export default function Footer() {
         className=" max-w-5xl w-full px-6 text-center relative z-50"
       >
 
-        <SplitText
-          text="Let's Talk"
-          tag="h2"
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           id="contact-heading"
           className="section-heading"
-          stagger={0.05}
-          duration={0.8}
-          splitType="chars"
-        />
+        >
+          Let's Talk
+        </motion.h2>
 
-        <SplitText
-          text="Looking to turn your idea into a polished product?"
-          tag="div"
-          className="section-content"
-          stagger={0.02}
-          duration={0.3}
-          splitType="lines"
-        />
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           transition={{ duration: 0.5, delay: 0.2 }}
+           className="section-content"
+        >
+           Looking to turn your idea into a polished product?
+        </motion.div>
 
-        <SplitText
-          text="Let's make it happen."
-          tag="div"
-          className="section-content"
-          stagger={0.02}
-          duration={0.3}
-          splitType="lines"
-        />
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           transition={{ duration: 0.5, delay: 0.3 }}
+           className="section-content"
+        >
+           Let's make it happen.
+        </motion.div>
 
         {/* Social Links */}
         <div className="mt-8 flex justify-center gap-6 flex-wrap">
@@ -99,30 +94,6 @@ export default function Footer() {
         {/* Medium Articles */}
         <ArticleCarousel isInView={isInView} />
       </motion.div>
-
-      {/* Lottie background */}
-      <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl pointer-events-none z-0"
-        style={{ filter: "grayscale(1) !important" }}
-        aria-hidden="true"
-      >
-        <DotLottieReact
-          src="https://lottie.host/f0bc37ac-2589-4af5-ade7-d0170c73bb17/jOPA0rTx5r.lottie"
-          loop
-          autoplay
-        />
-      </div>
-      <div
-        className="absolute top-0 left-0 rotate-20 w-full max-w-3xl pointer-events-none z-0  hidden lg:block"
-        style={{ filter: "grayscale(1) !important" }}
-        aria-hidden="true"
-      >
-        <DotLottieReact
-          src="https://lottie.host/f0bc37ac-2589-4af5-ade7-d0170c73bb17/jOPA0rTx5r.lottie"
-          loop
-          autoplay
-        />
-      </div>
 
       {/* Floating blobs */}
       <motion.div

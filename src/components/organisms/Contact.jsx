@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect, useState, memo } from "react";
-import SplitText from "../atoms/SplitText";
+import { motion } from "framer-motion";
 import SocialLinks from "../molecules/SocialLinks";
 
 const Contact = memo(function Contact() {
@@ -176,27 +176,26 @@ const Contact = memo(function Contact() {
           willChange: 'transform, opacity'
         }}
       >
-        <SplitText
-          text="Let's Talk "
-          tag="h2"
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           id="contact-section-heading"
           className="section-heading"
-          stagger={0.05}
-          duration={0.8}
-          splitType="chars"
-          threshold={0.3}
-          rootMargin="0px"
-        />
-        <SplitText
-          text="Looking to turn your idea into a polished product? Let's make it happen."
-          tag="div"
+        >
+          Let's Talk
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="section-content"
-          stagger={0.02}
-          duration={0.2}
-          splitType="lines"
-          threshold={0.3}
-          rootMargin="0px"
-        />
+        >
+          Looking to turn your idea into a polished product? Let's make it happen.
+        </motion.div>
         
         {/* Social Media Links */}
         <SocialLinks className="mt-8" />

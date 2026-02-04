@@ -13,6 +13,8 @@ export default function DoodleArrow({ variant = "straight-down", className = "",
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    // Disable on mobile (<= 640px) or if reduced motion is preferred
+    if (typeof window !== "undefined" && window.innerWidth <= 640) return;
     if (!pathRef.current || prefersReducedMotion) return;
 
     const path = pathRef.current;

@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import SplitText from "../atoms/SplitText";
+
 import WorkCard from "../molecules/WorkCard";
 import portfolioData from "../../portfolioData.js";
 import useReducedMotion from "../../hooks/useReducedMotion";
@@ -79,28 +79,28 @@ export default function Work() {
     <section aria-labelledby="work-heading" className="vertical-spacing">
       {/* Header */}
       <div className="pb-12 max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <SplitText
-          text="What do I do?"
-          tag="h2"
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           id="work-heading"
           className="section-heading"
-          stagger={0.05}
-          duration={0.7}
-          splitType="chars"
-          threshold={0.3}
-          rootMargin="0px"
-        />
-        <SplitText
-          text="I build polished, production-ready web experiences — from animated landing pages and decentralized apps to multilingual business sites. With hands-on expertise across React, Next.js, Web3, GSAP, and modern CSS, I turn complex requirements into seamless, responsive interfaces."
-          tag="p"
+        >
+          What do I do?
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="paragraph"
-          stagger={0.02}
-          duration={0.6}
-          splitType="words"
-          threshold={0.3}
-          rootMargin="0px"
-        />
+        >
+          I build polished, production-ready web experiences — from animated landing pages and decentralized apps to multilingual business sites. With hands-on expertise across React, Next.js, Web3, GSAP, and modern CSS, I turn complex requirements into seamless, responsive interfaces.
+        </motion.p>
       </div>
+
 
       {isMobile || prefersReducedMotion ? (
         /* Mobile / reduced-motion: Stacked cards */
@@ -119,7 +119,7 @@ export default function Work() {
         </div>
       ) : (
         /* Desktop: Horizontal scroll */
-        <div ref={triggerRef} className="relative overflow-hidden">
+        <div ref={triggerRef} className="relative overflow-hidden will-change-transform">
           <div className="w-full h-full absolute inset-0 opacity-20 pointer-events-none z-0" aria-hidden="true">
             <PixelBlast
               variant="circle"

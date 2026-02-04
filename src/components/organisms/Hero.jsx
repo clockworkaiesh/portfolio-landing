@@ -2,18 +2,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import useReducedMotion from "../../hooks/useReducedMotion";
 import BlobBackground from "./BlobBackground";
-
-const DotLottieReact = dynamic(
-  () =>
-    import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -53,8 +43,8 @@ export default function Hero() {
 
   // Get container size based on screen
   const getContainerSize = () => {
-    if (isMobile) return "w-full h-[280px] sm:h-[320px]";
-    if (isTablet) return "w-full h-[300px] md:h-[380px]";
+    if (isMobile) return "w-full h-[280px] h-[320px]";
+    if (isTablet) return "w-full h-[300px] h-[320px]";
     return "w-[370px] h-[370px] xl:w-[450px] xl:h-[450px]";
   };
 
@@ -95,7 +85,7 @@ export default function Hero() {
           className={`${isMobile ? "w-full text-center order-1" : isTablet ? "order-2 w-[50%] min-w-[50%]" : "order-2 text-left"} flex-1`}
         >
           <motion.h1
-            className={`${isMobile ? "text-4xl sm:text-5xl" : isTablet ? "text-5xl" : "text-6xl lg:text-5xl xl:text-[80px]"} font-bold leading-[1.1] mb-3 md:mb-4`}
+            className={`${isMobile ? "text-4xl sm:text-5xl" : isTablet ? "text-4xl" : "text-6xl lg:text-5xl xl:text-[80px]"} font-bold leading-[1.1] mb-3 md:mb-4`}
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut" }}
@@ -104,7 +94,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.h2
-            className={`${isMobile ? "text-md" : isTablet ? "text-xl" : "text-2xl lg:text-lg xl:text-2xl"} font-medium leading-[150%] text-neon-blue opacity-90`}
+            className={`${isMobile ? "text-md" : isTablet ? "text-lg" : "text-2xl lg:text-lg xl:text-2xl"} font-medium leading-[150%] text-neon-blue opacity-90`}
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut", delay: prefersReducedMotion ? 0 : 0.2 }}
@@ -114,7 +104,7 @@ export default function Hero() {
           </motion.h2>
 
           <motion.p
-            className={`${isMobile ? "text-md" : isTablet ? "text-lg md:text-xl" : "text-xl lg:text-lg xl:text-2xl"} text-text-muted leading-relaxed`}
+            className={`${isMobile ? "text-md" : isTablet ? "text-lg" : "text-xl lg:text-lg xl:text-2xl"} text-text-muted leading-relaxed`}
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: "easeOut", delay: prefersReducedMotion ? 0 : 0.4 }}
@@ -125,16 +115,15 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator */}
+      {/* Scroll Indicator */}
       <div
-        className="md:block hidden md:max-w-[180px] lg:max-w-[200px] xl:max-w-[220px]"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 md:block hidden"
         aria-hidden="true"
         role="presentation"
       >
-        <DotLottieReact
-          src="https://lottie.host/23410713-3874-4301-9f7f-365585e0c013/45DnF5vmFR.lottie"
-          loop
-          autoplay
-        />
+        <div className="c-scrolldown">
+          <div className="c-line"></div>
+        </div>
       </div>
     </div>
   );

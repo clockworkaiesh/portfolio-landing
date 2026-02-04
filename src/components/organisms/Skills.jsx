@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import SplitText from "../atoms/SplitText";
+
 import SkillCard from "../molecules/SkillCard";
 import useReducedMotion from "../../hooks/useReducedMotion";
 
@@ -152,28 +152,28 @@ export default function Skills() {
 
       <div className="w-full max-w-7xl mx-auto">
         <div className="text-center mb-8 sm:mb-10 lg:mb-12 px-4">
-          <SplitText
-            text="Technical Toolkit"
-            tag="h2"
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             id="skills-heading"
             className="section-heading"
-            stagger={0.05}
-            duration={0.7}
-            splitType="chars"
-            threshold={0.3}
-            rootMargin="0px"
-          />
-          <SplitText
-            text="A curated selection of technologies I use to build exceptional digital experiences"
-            tag="p"
+          >
+            Technical Toolkit
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="paragraph"
-            stagger={0.02}
-            duration={0.6}
-            splitType="words"
-            threshold={0.3}
-            rootMargin="0px"
-          />
+          >
+            A curated selection of technologies I use to build exceptional digital experiences
+          </motion.p>
         </div>
+
 
         <motion.div
           variants={containerVariants}
