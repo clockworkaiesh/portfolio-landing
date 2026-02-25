@@ -24,13 +24,13 @@ export default function Skills() {
     { name: "D3.js", image: "/skills/d3js.webp", category: "visualization" },
     { name: "Framer Motion", image: "/skills/framermotion.webp", category: "animation" },
     { name: "Tailwind CSS", image: "/skills/tailwind.webp", category: "styling" },
-    { name: "Sass", image: "/skills/sass.webp", category: "styling" },
     { name: "Material-UI", image: "/skills/mui.webp", category: "ui" },
     { name: "Figma", image: "/skills/figma.webp", category: "design" },
     { name: "Git", image: "/skills/git.webp", category: "tools" },
     { name: "VS Code", image: "/skills/vscode.webp", category: "tools" },
-    { name: "WordPress", image: "/skills/wordpress.webp", category: "cms" },
-    { name: "Bootstrap", image: "/skills/brand.webp", category: "ui" },
+    { name: "Ethers.js", image: "/skills/ethers.webp", category: "web3" },
+    { name: "MetaMask", image: "/skills/metamask.webp", category: "web3" },
+    { name: "Reown", image: "/skills/reown.webp", category: "web3" },
   ];
 
   useEffect(() => {
@@ -73,6 +73,7 @@ export default function Skills() {
       design: "bg-gradient-to-r from-red-500 to-orange-500",
       tools: "bg-gradient-to-r from-gray-500 to-slate-500",
       cms: "bg-gradient-to-r from-blue-600 to-indigo-600",
+      web3: "bg-gradient-to-r from-orange-400 to-orange-600",
     };
     return colors[category] || "bg-gradient-to-r from-gray-500 to-slate-500";
   };
@@ -143,7 +144,7 @@ export default function Skills() {
        {/* Doodle Arrow - Right */}
        <div className="absolute top-1/4 right-10 hidden xl:block w-40 h-40">
         <DoodleArrow variant="loop-left" />
-      </div>
+       </div>
 
        {/* Doodle Arrow - Left */}
        <div className="absolute xl:bottom-[2%] 2xl:bottom-1/4 left-10 rotate-[300deg] hidden xl:block w-40 h-40">
@@ -222,6 +223,13 @@ export default function Skills() {
                 <div className="w-2 h-2 rounded-full bg-yellow-500" aria-hidden="true"></div>
               </div>
               <span className="text-xs sm:text-sm">Animation</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full bg-orange-400" aria-hidden="true"></div>
+                <div className="w-2 h-2 rounded-full bg-orange-600" aria-hidden="true"></div>
+              </div>
+              <span className="text-xs sm:text-sm">Web3</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">

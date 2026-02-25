@@ -95,7 +95,7 @@ export default function Footer() {
         {/* Medium Articles */}
         <ArticleCarousel isInView={isInView} />
 
-        <div className="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 opacity-40 hover:opacity-100 transition-opacity duration-500">
+        <div className="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 opacity-50 ">
           <p className="text-[10px] md:text-xs tracking-wider text-text-muted uppercase">
             © {new Date().getFullYear()} Ayesha Naveed. All rights reserved.
           </p>
