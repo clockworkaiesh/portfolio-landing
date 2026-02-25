@@ -1,5 +1,6 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import ScrollManager from "../components/molecules/ScrollManager";
 import Footer from "../components/organisms/Footer";
 
@@ -78,6 +79,7 @@ export default function RootLayout({ children }) {
           </div>
           <Footer />
         </ScrollManager>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'G-3341GGJR42'} />
       </body>
     </html>
   );
